@@ -303,7 +303,7 @@ section {
     list-style-type: none;
 }
 
-li:hover{
+.conteiner-listas li:hover{
     background-color: gray;
 }
 
