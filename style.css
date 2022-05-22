@@ -272,6 +272,7 @@ body {
     border-radius: 5px;
     height: 22px;
     border: none;
+    width: 225px;
 }
 .conteiner-buscador button { 
     background-color: var(--overlay);
