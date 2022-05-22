@@ -262,9 +262,9 @@ body {
 .conteiner-listas { 
     list-style-type: none;
     font-size: 18px;
-    width: 60%;
+    width: 25%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 .conteiner-buscador { padding-right: 30px;}
 .conteiner-buscador input { 
