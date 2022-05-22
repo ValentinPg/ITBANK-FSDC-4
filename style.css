@@ -24,6 +24,7 @@
     --negro: rgb(10, 9, 9);
     --overlay: #659CA8; 
     --fondo: rgb(244, 243, 243);
+    --azul: #152535;
 
 }
 body { 
@@ -78,7 +79,7 @@ section{
     border: none;
 }
 .conteiner-buscador button { 
-    color: var(--overlay);
+    color: var(--fondo);
     background-color: var(--overlay);
     height: 25px;
     border-radius: 5px;
@@ -273,10 +274,13 @@ body {
     border: none;
 }
 .conteiner-buscador button { 
-    color: var(--overlay);
     background-color: var(--overlay);
-    height: 25px;
+    height: 26px;
     border-radius: 5px;
+    width: 32px;
+}
+.conteiner-buscador button i {
+    color: var(--);
 }
 /* Cuerpo de a pagina */
 section { 
