@@ -24,6 +24,7 @@
     --negro: rgb(10, 9, 9);
     --overlay: #659CA8; 
     --fondo: rgb(244, 243, 243);
+    --azul: #152535;
 
 }
 body { 
@@ -78,7 +79,7 @@ section{
     border: none;
 }
 .conteiner-buscador button { 
-    color: var(--overlay);
+    color: var(--fondo);
     background-color: var(--overlay);
     height: 25px;
     border-radius: 5px;
@@ -176,14 +177,12 @@ text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
     min-width: 200px;
+    text-align: center;
+    color: white;
+    padding-bottom: 20px;
     
 }
 
-#informacion p{
-    padding-bottom: 20px;
-    text-align: center;
-    color: white;
-}
 #promociones{
     position: relative;
     display: flexbox;
@@ -262,21 +261,26 @@ body {
 .conteiner-listas { 
     list-style-type: none;
     font-size: 18px;
-    width: 60%;
+    width: 25%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 .conteiner-buscador { padding-right: 30px;}
 .conteiner-buscador input { 
     border-radius: 5px;
-    height: 20px;
+    height: 22px;
     border: none;
+    width: 225px;
 }
 .conteiner-buscador button { 
-    color: var(--overlay);
     background-color: var(--overlay);
-    height: 25px;
+    height: 26px;
     border-radius: 5px;
+    width: 32px;
+    border: none;
+}
+.conteiner-buscador button i {
+    color: var(--);
 }
 /* Cuerpo de a pagina */
 section { 
@@ -299,7 +303,7 @@ section {
     list-style-type: none;
 }
 
-li:hover{
+.conteiner-listas li:hover{
     background-color: gray;
 }
 
