@@ -278,6 +278,7 @@ body {
     height: 26px;
     border-radius: 5px;
     width: 32px;
+    border: none;
 }
 .conteiner-buscador button i {
     color: var(--);
