@@ -1,3 +1,219 @@
+.text{
+    margin-left: 100px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Koulen&display=swap');
+
+
+.fondo{
+    background-image: url(Icons/buenosaires1.jpg);
+    background-repeat:no-repeat;
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    -o-background-size:cover;
+    background-size:cover;
+    background-position:center;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+:root { /* Paleta de Colores*/
+    --negro: rgb(10, 9, 9);
+    --overlay: #659CA8; 
+    --fondo: rgb(244, 243, 243);
+
+}
+body { 
+    color: var(--negro);
+    background-color: var(--fondo);
+
+}
+
+a:link{
+    text-decoration: solid;
+}
+
+section{
+    background-color: rgb(29, 33, 54);
+}
+
+/* Encabezado y Pie de pagina*/
+.header,.footer {  
+    color: var(--fondo);
+    background-color: var(--negro);
+    width: 100vw;
+    height: 100px;
+    border-bottom: 4px solid var(--overlay);
+    font-family: 'Inter', sans-serif;
+}
+/* Encabezado */
+.header-conteiner {
+    display: flex;
+    justify-content: space-between;
+   align-items: center;
+}
+.logo a { 
+    text-decoration: none;
+    color: var(--fondo);
+    font-family: 'Bebas Neue', 'Courier New', Courier, monospace, sans-serif,;
+    font-size: 60px;
+    padding-left: 30px;
+
+}
+
+.conteiner-listas { 
+    list-style-type: none;
+    font-size: 18px;
+    width: 60%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.conteiner-buscador { padding-right: 30px;}
+.conteiner-buscador input { 
+    border-radius: 5px;
+    height: 20px;
+    border: none;
+}
+.conteiner-buscador button { 
+    color: var(--overlay);
+    background-color: var(--overlay);
+    height: 25px;
+    border-radius: 5px;
+}
+/* Cuerpo de a pagina */
+section { 
+    height: 100vh;
+}
+/* Pie de Pagina*/
+.footer {
+    margin-top: 10px;
+    position: absolute; 
+    border-bottom: none;
+    border-top: 4px solid var(--overlay);
+    height: min-content;
+    padding-bottom: 10px;
+}
+.footer-contenido { 
+    font-size: 18px;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+}
+.footer-contenido ol { 
+    list-style-type: none;
+}
+
+/** se quita el margen por defecto */
+*{
+    margin: 0;
+    padding: 0;
+}
+/** se establece el diseño del fondo y de la imagen estatica */
+#fondo-imagen{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+#fondo{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(0, 102, 153, 0.900),rgb(224, 224, 224));
+}
+/*@media (max-width:300px){
+    #cuentas{
+        flex-direction: column;
+        justify-content: center;}
+    #informacion{
+        flex-direction: column;
+        justify-content: center;}
+}*/
+#cuentas{
+    margin-top: 130px;
+    min-width: 300px;
+    justify-content: center;
+    position: relative;
+    display: flex;
+    padding-left: 10px;
+    flex-wrap: wrap;
+}
+#cuentas div{
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.373);
+    margin: 5px;
+    min-width: 400px;
+}
+#cuentas h2{
+    padding: 10px;
+    margin-bottom: 100px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+#cuentas p{
+    font-size: 30px;
+    margin-bottom: 100px;
+text-align: center;
+}
+
+#informacion{
+    position: relative;
+    display: flexbox;
+    border-radius: 10px;
+    justify-content: center;
+    margin-top: 100px;
+    flex-wrap: wrap;
+    background-color: rgba(255, 255, 255, 0.808);
+    min-width: 300px;
+}
+#informacion button{
+    background-color: rgba(7, 116, 171, 0.636);
+    border-radius: 10px;
+    margin-right: 15px;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-width: 200px;
+    
+}
+
+#informacion p{
+    padding-bottom: 20px;
+    text-align: center;
+    color: white;
+}
+#promociones{
+    position: relative;
+    display: flexbox;
+    border-radius: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: rgba(255, 255, 255, 0.808);
+    min-width: 300px;
+    margin-top: 10px;
+}
+#promociones button{
+    background-color: rgba(7, 116, 171, 0.636);
+    border-radius: 10px;
+    margin-right: 15px;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-width: 200px;
+    
+}
+
+#promociones p{
+    margin: 10px;
+    font-size: xx-large;
+    padding-bottom: 100px;
+    text-align: center;
+    color: white;
+}
+
+
 @import url('https://fonts.googleapis.com/css2?family=Koulen&display=swap');
 
 /* font-family: 'Koulen', cursive;*/
@@ -28,9 +244,12 @@ body {
 }
 /* Encabezado */
 .header-conteiner {
+    flex-wrap: wrap;
     display: flex;
     justify-content: space-between;
    align-items: center;
+   z-index: 5;
+   position: relative;
 }
 .logo a { 
     text-decoration: none;
@@ -79,4 +298,15 @@ section {
 .footer-contenido ol { 
     list-style-type: none;
 }
+
 @media only screen and (min-width: 768px) and (max-width: 980px)
+
+
+li:hover{
+    background-color: gray;
+}
+
+@media screen and (min-width: 480px) and (max-width: 780px){
+    
+}
+
