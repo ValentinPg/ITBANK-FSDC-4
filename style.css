@@ -177,13 +177,15 @@ text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
     min-width: 200px;
+    text-align: center;
+    color: white;
     
 }
 
 #informacion p{
     padding-bottom: 20px;
-    text-align: center;
-    color: white;
+    
+    
 }
 #promociones{
     position: relative;
