@@ -303,10 +303,18 @@ section {
     list-style-type: none;
 }
 
+
 .conteiner-listas li:hover{
+
+@media only screen and (min-width: 768px) and (max-width: 980px)
+
+
+li:hover{
+
     background-color: gray;
 }
 
 @media screen and (min-width: 480px) and (max-width: 780px){
     
 }
+
