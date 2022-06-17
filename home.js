@@ -27,7 +27,9 @@ function conseguirDatos(){
 
     })
 }
-
+conseguirDatos()
+setInterval(borrarAray, 60000)
+setInterval(conseguirDatos,60000)
 
 //resetear datos arrays
 function borrarAray(){
