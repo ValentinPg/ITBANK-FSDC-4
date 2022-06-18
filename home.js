@@ -27,7 +27,9 @@ function conseguirDatos(){
 
     })
 }
-
+conseguirDatos()
+setInterval(borrarAray, 60000)
+setInterval(conseguirDatos,60000)
 
 //resetear datos arrays
 function borrarAray(){
@@ -40,7 +42,7 @@ function borrarAray(){
  //prueba de una lista que muestre los valores de venta de cada tipo de dolar
 function imprimirDolar(){
     let lista = nombresDolar.forEach(element => {
-        let valores = document.createElement("li");
+        let valores = document.createElement("div");
         tablaDolar.appendChild(valores);
         valores.innerHTML = element + "= " + ventaDolar[nombresDolar.indexOf(element)];
     });
