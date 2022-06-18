@@ -287,6 +287,10 @@ section {
     height: 100vh;
 }
 /* Pie de Pagina*/
+#cotizaciones h1 {
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+}
 .footer { 
     border-bottom: none;
     border-top: 4px solid var(--overlay);
