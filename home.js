@@ -49,3 +49,8 @@ function imprimirDolar(){
     
 }
 
+
+//Funcion para visualizar la seccion de cotizaciones
+function visualizacionOn() {
+    document.getElementById('visualizacion').style.display = 'inline-block'
+}

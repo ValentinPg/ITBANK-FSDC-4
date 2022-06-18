@@ -52,31 +52,34 @@
                 
             </div>
             <!-- Seccion de cotizaciones-->
-            <article id="cotizaciones">
-                <h1>Cotizaciones del Día</h1>
-                <article id="pruebas">
-
-                </article>
-            </article>
-             <!-- Modelo de secciones-->
-            <div id="modelo">
+            <article id="cotizaciones"></article>
+            <article id="visualizacion">
                 <article>
-                    <h1>Titulo</h1>
-                    <article id="modelo-conteiner">
-                        <article>
-                            <h2>Compra</h2>
-                            <!-- Lugar para imprimir el precio de compra-->
-                            <h3>$ 400,00</h3>
-                        </article>
-                        <article>
-                            <h2>Venta</h2>
-                            <!-- Lugar para imprimir el precio de Venta-->
-                            <h3>$ 300.00</h3>
-                        </article>
+                    <h1>Cotizaciones del Día</h1>
+                    <article id="pruebas">
+
                     </article>
-                    <p>ACTUALIZADO: dd/mm/aaaa 00:00 </p>
                 </article>
-            </div>
+                <!-- Modelo de secciones-->
+                <div id="modelo">
+                    <article>
+                        <h1>Titulo</h1>
+                        <article id="modelo-conteiner">
+                            <article>
+                                <h2>Compra</h2>
+                                <!-- Lugar para imprimir el precio de compra-->
+                                <h3>$ 400,00</h3>
+                            </article>
+                            <article>
+                                <h2>Venta</h2>
+                                <!-- Lugar para imprimir el precio de Venta-->
+                                <h3>$ 300.00</h3>
+                            </article>
+                        </article>
+                        <p>ACTUALIZADO: dd/mm/aaaa 00:00 </p>
+                    </article>
+                </div>
+            </article>
         </div>
         <div id="informacion">
             <button><p>TRANSFERENCIAS</p><img src="icons/transferencias.png" alt="transferencias"></button>
@@ -92,7 +95,7 @@
             <button><p>COBROS</p><img src="icons/cobros.png" alt="cobros"></button>
             <button><p>DESCUENTOS Y OFERTAS</p><img src="icons/png-descuento-ofertas.png" alt="Descuentos y OFERTAS"></button>
             <button><p>LOCALES Y COMERCIOS</p><img src="icons/Locales_comercio.png" alt=""></button>
-            <button onclick="imprimirDolar()" ><a href="#cotizaciones"><p>Cotizacion</p></a></button>
+            <button onclick="imprimirDolar(); visualizacionOn();" ><a href="#cotizaciones"><p>Cotizacion</p></a></button>
         
         </div>
 
