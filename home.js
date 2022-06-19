@@ -23,14 +23,11 @@ function conseguirDatos(){
          compraDolar.push(x.casa.compra);
 
         }});
-        //Debug
 
 
     })
 }
-conseguirDatos()
-setInterval(borrarAray, 60000)
-setInterval(conseguirDatos,60000)
+
 
 //resetear datos arrays
 function borrarAray(){
@@ -65,5 +62,7 @@ function idObtener() {
           }
         });
       });
+      borrarAray();
+      conseguirDatos();
 }
 idObtener()
