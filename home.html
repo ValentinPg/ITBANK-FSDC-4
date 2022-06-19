@@ -51,11 +51,42 @@
                 <p>999.999.999,00 $</p>
                 
             </div>
-            <div>
-                <ul id="pruebas">
-                    
-                </ul>
-            </div>
+            <!-- Seccion de cotizaciones-->
+            <article id="visualizacion">
+                <article id="cotizaciones">
+                    <h1>Cotizaciones del Día</h1>
+                    <input class="btn-act" type="button" value="Actualizar" onclick="location.reload()"/>
+                    <article id="pruebas">
+                        <button class="click" id="boton1" >Dolar Oficial</button>
+                        <button class="click" id="boton2" >Dolar Blue</button>
+                        <button class="click" id="boton3" >Dolar Soja</button>
+                        <button class="click" id="boton4" >Dolar Contado con Liqui</button>
+                        <button class="click" id="boton5" >Dolar Bolsa</button>
+                        <button class="click" id="boton6" >Dolar turista</button>
+                        <button class="click" id="boton7" >Dolar</button>
+
+                    </article>
+                </article>
+                <!-- Modelo de secciones-->
+                <div id="modelo">
+                    <article>
+                        <h1 id="tipo-dolar">Seleccione un tipo de Dolar</h1>
+                        <article id="modelo-conteiner">
+                            <article>
+                                <h2>Compra</h2>
+                                <!-- Lugar para imprimir el precio de compra-->
+                                <h3 id="valor-compra">-</h3>
+                            </article>
+                            <article>
+                                <h2>Venta</h2>
+                                <!-- Lugar para imprimir el precio de Venta-->
+                                <h3 id="valor-venta">-</h3>
+                            </article>
+                        </article>
+                        <p>ACTUALIZADO: dd/mm/aaaa 00:00 </p>
+                    </article>
+                </div>
+            </article>
         </div>
         <div id="informacion">
             <button><p>TRANSFERENCIAS</p><img src="Icons/transferencias.png" alt="transferencias"></button>
@@ -67,11 +98,13 @@
         
         </div>
         <div id="promociones">
-            <button><p>PUNTOS DE INTERES</p><img src="Icons/Puntos en comun.png" alt=""></button>
-            <button><p>COBROS</p><img src="Icons/cobros.png" alt="cobros"></button>
-            <button><p>DESCUENTOS Y OFERTAS</p><img src="Icons/png-descuento-ofertas.png" alt="Descuentos y OFERTAS"></button>
-            <button><p>LOCALES Y COMERCIOS</p><img src="Icons/Locales_comercio.png" alt=""></button>
-            <button onclick="imprimirDolar()"><p>Cotizacion</p></button>
+          
+            <button><p>PUNTOS DE INTERES</p><img src="icons/Puntos en comun.png" alt=""></button>
+            <button><p>COBROS</p><img src="icons/cobros.png" alt="cobros"></button>
+            <button><p>DESCUENTOS Y OFERTAS</p><img src="icons/png-descuento-ofertas.png" alt="Descuentos y OFERTAS"></button>
+            <button><p>LOCALES Y COMERCIOS</p><img src="icons/Locales_comercio.png" alt=""></button>
+            <button onclick="imprimirDolar(); visualizacionOn();" ><a href="#cotizaciones"><p>Cotizacion</p></a></button>
+
         
         </div>
 

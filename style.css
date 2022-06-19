@@ -287,6 +287,10 @@ section {
     height: 100vh;
 }
 /* Pie de Pagina*/
+#cotizaciones h1 {   /*para el titulo de cotizaciones*/
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+}
 .footer { 
     border-bottom: none;
     border-top: 4px solid var(--overlay);
@@ -303,18 +307,43 @@ section {
     list-style-type: none;
 }
 
+/*Modelo de cotizacion*/
 
-.conteiner-listas li:hover{
+/*Boton actualizar*/
 
-@media only screen and (min-width: 768px) and (max-width: 980px)
+.btn-act {
+    background-color: rgba(255, 255, 255, 0.373);
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 12px;
+    padding: 5px 12px;
+} 
 
-
-li:hover{
-
-    background-color: gray;
+#modelo-conteiner {
+    padding: 5px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+#modelo-conteiner h2 {
+    margin-bottom: 10px;;
+    padding: 0;
+    height: min-content;
+}
+#modelo h1 {
+    color: antiquewhite;
+    text-align: center;
+    background-color: rgba(141, 79, 29, 0.589);
 }
 
-@media screen and (min-width: 480px) and (max-width: 780px){
-    
+#modelo p {
+    background-color: rgba(18, 22, 48, 0.637);
+    color: antiquewhite;
+    font-size: 15px;
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
 }
-
+#visualizacion {
+    display: none;
+}
