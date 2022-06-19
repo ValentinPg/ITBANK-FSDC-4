@@ -62,8 +62,9 @@ function idObtener() {
           let typeDolar = document.getElementById(id).innerHTML
           console.log(typeDolar);
           for(let i of nombresDolar){
-            if(i == nombresDolar){
+            if(i == typeDolar){
                 console.log("hola")
+                //hacer que imprima los valores en la tabla con el get element by id
             }
           }
         });
