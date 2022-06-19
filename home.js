@@ -1,5 +1,8 @@
 const tablaDolar = document.getElementById("pruebas");
 const URLApi = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+const ventaTabla = document.getElementById("valor-venta");
+const tituloTabla = document.getElementById("tipo-dolar");
+const compraTabla = document.getElementById("valor-compra");
 let nombresDolar = [];
 let ventaDolar = [];
 let compraDolar = [];
@@ -21,9 +24,7 @@ function conseguirDatos(){
 
         }});
         //Debug
-        console.log(ventaDolar);
-        console.log(nombresDolar);
-        console.log(compraDolar);
+
 
     })
 }
@@ -41,11 +42,6 @@ function borrarAray(){
 
  //prueba de una lista que muestre los valores de venta de cada tipo de dolar
 function imprimirDolar(){
-    let lista = nombresDolar.forEach(element => {
-        let valores = document.createElement("div");
-        tablaDolar.appendChild(valores);
-        valores.innerHTML = element + "= " + ventaDolar[nombresDolar.indexOf(element)];
-    });
     
 }
 
@@ -59,14 +55,15 @@ function idObtener() {
     document.querySelectorAll(".click").forEach(el => {
         el.addEventListener("click", e => {
           const id = e.target.getAttribute("id");
-          let typeDolar = document.getElementById(id).innerHTML
-          console.log(typeDolar);
+          let typeDolar = document.getElementById(id).innerHTML;
           for(let i of nombresDolar){
             if(i == typeDolar){
-                console.log("hola")
-                //hacer que imprima los valores en la tabla con el get element by id
+                tituloTabla.innerHTML = nombresDolar[nombresDolar.indexOf(i)];
+                ventaTabla.innerHTML = ventaDolar[nombresDolar.indexOf(i)];
+                compraTabla.innerHTML = compraDolar[nombresDolar.indexOf(i)];
             }
           }
         });
       });
 }
+idObtener()
