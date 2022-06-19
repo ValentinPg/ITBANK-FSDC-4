@@ -54,3 +54,18 @@ function imprimirDolar(){
 function visualizacionOn() {
     document.getElementById('visualizacion').style.display = 'inline-block'
 }
+
+function idObtener() {
+    document.querySelectorAll(".click").forEach(el => {
+        el.addEventListener("click", e => {
+          const id = e.target.getAttribute("id");
+          let typeDolar = document.getElementById(id).innerHTML
+          console.log(typeDolar);
+          for(let i of nombresDolar){
+            if(i == nombresDolar){
+                console.log("hola")
+            }
+          }
+        });
+      });
+}
