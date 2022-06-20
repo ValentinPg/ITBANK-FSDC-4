@@ -3,6 +3,7 @@ const URLApi = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
 const ventaTabla = document.getElementById("valor-venta");
 const tituloTabla = document.getElementById("tipo-dolar");
 const compraTabla = document.getElementById("valor-compra");
+const cronometro = document.getElementById("cronometro");
 let nombresDolar = [];
 let ventaDolar = [];
 let compraDolar = [];
@@ -27,7 +28,20 @@ function conseguirDatos(){
 
     })
 }
+conseguirDatos();
 
+
+//cronometro que se actualiza cada 1 minuto
+function cronometraje() {
+      setInterval(() => {
+          let fecha = new Date();
+          let minutos = fecha.getMinutes();
+          let horas = fecha.getHours();
+          let dias = fecha.getDay();
+          
+          cronometro.innerHTML = `Actualizado por ultima vez a las ${horas} horas y ${minutos} minutos `
+      },60000)
+}
 
 //resetear datos arrays
 function borrarAray(){
@@ -36,11 +50,14 @@ function borrarAray(){
      compraDolar = [];
 
 }
-
- //prueba de una lista que muestre los valores de venta de cada tipo de dolar
-function imprimirDolar(){
-    
+//recargar la tabla por si hubiese un erro visual o en los datos
+function recargar(){
+    tituloTabla.innerHTML = "Seleccione un tipo de Dolar";
+    ventaTabla.innerHTML = "-";
+    compraTabla.innerHTML = "-";
+    cronometro.innerHTML = "-";
 }
+function imprimirDolar(){}
 
 
 //Funcion para visualizar la seccion de cotizaciones
@@ -62,7 +79,11 @@ function idObtener() {
           }
         });
       });
-      borrarAray();
-      conseguirDatos();
-}
-idObtener()
+      cronometraje();
+
+    }
+idObtener();
+//Actualizacion de datos minuto a minuto
+setInterval(borrarAray, 60000);
+setInterval(conseguirDatos, 60000)
+
