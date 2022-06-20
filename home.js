@@ -55,7 +55,7 @@ function recargar(){
     tituloTabla.innerHTML = "Seleccione un tipo de Dolar";
     ventaTabla.innerHTML = "-";
     compraTabla.innerHTML = "-";
-    cronometro.innerHTML = "-";
+    cronometro.innerHTML = "ACTUALIZADO: Hace menos de un minuto";
 }
 function imprimirDolar(){}
 
