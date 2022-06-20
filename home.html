@@ -55,15 +55,15 @@
             <article id="visualizacion">
                 <article id="cotizaciones">
                     <h1>Cotizaciones del Día</h1>
-                    <input class="btn-act" type="button" value="Actualizar" onclick="location.reload()"/>
+                    <input class="btn-act" type="button" value="Actualizar" onclick="recargar()"/>
                     <article id="pruebas">
-                        <button class="click" id="boton1" >Dolar Oficial</button>
-                        <button class="click" id="boton2" >Dolar Blue</button>
-                        <button class="click" id="boton3" >Dolar Soja</button>
-                        <button class="click" id="boton4" >Dolar Contado con Liqui</button>
-                        <button class="click" id="boton5" >Dolar Bolsa</button>
-                        <button class="click" id="boton6" >Dolar turista</button>
-                        <button class="click" id="boton7" >Dolar</button>
+                        <button class="click btn-dark" id="boton1" >Dolar Oficial</button>
+                        <button class="click btn-dark" id="boton2" >Dolar Blue</button>
+                        <button class="click btn-dark" id="boton3" >Dolar Soja</button>
+                        <button class="click btn-dark" id="boton4" >Dolar Contado con Liqui</button>
+                        <button class="click btn-dark" id="boton5" >Dolar Bolsa</button>
+                        <button class="click btn-dark" id="boton6" >Dolar turista</button>
+                        <button class="click btn-dark" id="boton7" >Dolar</button>
 
                     </article>
                 </article>
@@ -83,7 +83,7 @@
                                 <h3 id="valor-venta">-</h3>
                             </article>
                         </article>
-                        <p>ACTUALIZADO: dd/mm/aaaa 00:00 </p>
+                        <p id="cronometro">ACTUALIZADO: Hace menos de un minuto </p>
                     </article>
                 </div>
             </article>
@@ -103,7 +103,7 @@
             <button><p>COBROS</p><img src="icons/cobros.png" alt="cobros"></button>
             <button><p>DESCUENTOS Y OFERTAS</p><img src="icons/png-descuento-ofertas.png" alt="Descuentos y OFERTAS"></button>
             <button><p>LOCALES Y COMERCIOS</p><img src="icons/Locales_comercio.png" alt=""></button>
-            <button onclick="imprimirDolar(); visualizacionOn();" ><a href="#cotizaciones"><p>Cotizacion</p></a></button>
+            <button class="btn-danger" onclick="imprimirDolar(); visualizacionOn();" ><a href="#cotizaciones"><p>Cotizacion</p></a></button>
 
         
         </div>
