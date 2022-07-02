@@ -29,6 +29,7 @@ dni = input("ingrese el DNI del cliente (sin puntos): ")
 
 
 
+
 def obtenerInfo():   
     with open("python\info-cheques.csv") as abrirArchivo:
         archivo = csv.DictReader(abrirArchivo)
