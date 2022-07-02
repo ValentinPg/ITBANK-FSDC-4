@@ -11,33 +11,31 @@
 # TIPO: "EMITIDO" O "DEPOSITADO"
 
 import csv
+from logging.config import dictConfig
 from operator import index
+import os
 
 # print("Bienvenido a ITBANK, este es el sistema de busqueda de cheques")
 # print('los datos se encuentran almacenados en el archivo "info cheques.csv"')
 
 dni = input("ingrese el DNI del cliente (sin puntos): ")
 
-while len(dni) != 8:
-    print("DNI invalido, el numero debe tener 8 digitos")
-    dni = input("ingrese el DNI del cliente (sin puntos): ")
+# while len(dni) != 8:
+#     print("DNI invalido, el numero debe tener 8 digitos")
+#     dni = input("ingrese el DNI del cliente (sin puntos): ")
 
 # salida = (input("ingrese si quiere que la salida sea en formato pantalla o CSV: ")).lower()
 
 # while salida != "pantalla" and salida != "csv":
 #     print("fromato invallido, por favor ingrese otra vez")
 #     salida = (input("ingrese si quiere que la salida sea en formato pantalla o CSV: ")).lower()
-usuarios = []
-with open("python\info-cheques.csv") as abrirArchivo:
-    archivo = csv.reader(abrirArchivo)
-    for linea in archivo:
-       usuarios.append((linea[0::]))
-       
-del usuarios[0]
 
 
-for persona in usuarios:
-    for deudor in persona:
-        if dni == deudor:
-            print(persona)
-    
+
+def obtenerInfo():   
+    with open("python\info-cheques.csv") as abrirArchivo:
+        archivo = csv.DictReader(abrirArchivo)
+        for linea in archivo:
+            if dni in linea.values():
+                print(linea)
+obtenerInfo()
