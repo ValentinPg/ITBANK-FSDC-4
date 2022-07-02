@@ -66,7 +66,6 @@ import os
 # Pedimos dni
 
 dni = input("Ingrese número de DNI del cliente ")
-
 def evaluar(numeroDni):
     # Pedimos dni
     # Evaluamos que el dni ingresado corresponde
