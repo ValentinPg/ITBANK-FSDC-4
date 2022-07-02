@@ -15,15 +15,9 @@ print('los datos se encuentran almacenados en el archivo "info cheques.csv"')
 
 dni = input("ingrese el DNI del cliente (sin puntos): ")
 
-while len(dni) != 8:
-    print("DNI invalido, el numero debe tener 8 digitos")
-    dni = input("ingrese el DNI del cliente (sin puntos): ")
 
-salida = (input("ingrese si quiere que la salida sea en formato pantalla o CSV: ")).lower()
 
-while salida != "pantalla" and salida != "csv":
-    print("fromato invallido, por favor ingrese otra vez")
-    salida = (input("ingrese si quiere que la salida sea en formato pantalla o CSV: ")).lower()
+salida = (input("ingrese si quiere que la salida sea en formato pantalla o CSV: "))
 
 print("el cheque fue depositado/emitido")
 print("Estado del cheque: PENDIENTE, APROBADO, RECHAZADO. (Opcional)")
