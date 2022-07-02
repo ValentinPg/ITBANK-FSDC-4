@@ -15,14 +15,11 @@ from logging.config import dictConfig
 from operator import index
 import os
 
-# print("Bienvenido a ITBANK, este es el sistema de busqueda de cheques")
-# print('los datos se encuentran almacenados en el archivo "info cheques.csv"')
+print("Bienvenido a ITBANK, este es el sistema de busqueda de cheques")
+print('los datos se encuentran almacenados en el archivo "info cheques.csv"')
 
 dni = input("ingrese el DNI del cliente (sin puntos): ")
 
-# while len(dni) != 8:
-#     print("DNI invalido, el numero debe tener 8 digitos")
-#     dni = input("ingrese el DNI del cliente (sin puntos): ")
 
 # salida = (input("ingrese si quiere que la salida sea en formato pantalla o CSV: ")).lower()
 
@@ -36,6 +33,12 @@ def obtenerInfo():
     with open("python\info-cheques.csv") as abrirArchivo:
         archivo = csv.DictReader(abrirArchivo)
         for linea in archivo:
-            if dni in linea.values():
-                print(linea)
+            if dni == linea["DNI"]:
+                documento = linea["NroCheque"]
+                tipoCheque = linea["Tipo"]
+                estadoCheque = linea["Estado"]
+                print(f"el numero de cheque es: {documento}")
+                print(f"el cheque fue {tipoCheque}")
+                print(f"el estado del cheque es: {estadoCheque}")
+                
 obtenerInfo()
