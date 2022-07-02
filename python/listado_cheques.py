@@ -10,6 +10,7 @@
 # Estado: Puede tener 3 valores pendiente, aprobado o rechazado.
 # TIPO: "EMITIDO" O "DEPOSITADO"
 
+from ast import Return
 import csv
 from logging.config import dictConfig
 from operator import index
@@ -18,19 +19,31 @@ import os
 # print("Bienvenido a ITBANK, este es el sistema de busqueda de cheques")
 # print('los datos se encuentran almacenados en el archivo "info cheques.csv"')
 
-dni = int(input("ingrese el DNI del cliente (sin puntos ni espacios): "))
+#funcion para evaluar el dni ingresado por el cliente
+def evaluar():
+    # Pedimos dni
+    dni = input("Ingrese número de DNI del cliente ")
+    # Evaluamos que el dni ingresado corresponde
+    numbers = []
+    while (len(dni) >= 8) and (len(dni) <= 10):
+        for i in range(0, 10):
+            numbers.append(str(i))
+        for char in dni:
+            if char not in numbers:
+                print("El dni es invalido, debe contener solo caracteres númericos")
+        break
+    return dni #Deberia retoranar el dni
+evaluar()
 
-# while len(dni) != 8:
-#     print("DNI invalido, el numero debe tener 8 digitos")
-#     dni = input("ingrese el DNI del cliente (sin puntos): ")
-
-# salida = (input("ingrese si quiere que la salida sea en formato pantalla o CSV: ")).lower()
-
-# while salida != "pantalla" and salida != "csv":
-#     print("fromato invallido, por favor ingrese otra vez")
-#     salida = (input("ingrese si quiere que la salida sea en formato pantalla o CSV: ")).lower()
-
-
+#funcion para elegir formato de impresion
+def formatoImpreso():
+    # Damos a elegir dos opciones de formato de impresion "Pantalla" o "CSV"
+    formato = input("¿Desea imprimir los datos en Pantalla o formato CSV? ").lower()
+    if formato == "pantalla":
+        formato_Pantalla = True
+    else:
+        formato_csv = True
+formatoImpreso()
 
 def obtenerInfo():   
     with open("python\info-cheques.csv") as abrirArchivo:
