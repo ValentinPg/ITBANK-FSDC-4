@@ -62,7 +62,6 @@ def obtenerInfo():
                 print(f"El estado del cheque es: {estadoCheque}\n")
     abrirArchivo.close()      
            
-obtenerInfo()
 
 
                 
@@ -82,8 +81,11 @@ def estadoCheque():
                 nCO = linea["NumeroCuentaOrigen"]
                 NCD = linea["NumeroCuentaDestino"]
                 valor = linea["Valor"]
-                fechaOrigen = linea["FechaOrigen"]
-                FechaPago = linea["FechaPago"]
+                linea["FechaOrigen"] = int(linea["FechaOrigen"])
+                FechaOrigen = datetime.date.fromtimestamp(linea["FechaOrigen"])
+                #convierto a int para tener la fecha
+                linea["FechaPago"] = int(linea["FechaPago"])
+                FechaPago = datetime.date.fromtimestamp(linea["FechaPago"])
                 Tipo = linea["Tipo"]
 
                 
@@ -93,7 +95,7 @@ def estadoCheque():
                 print(f'El número de cuenta de origen es: {nCO} ')
                 print(f'El número de cuenta de destino es: {NCD} ')
                 print(f'El valor del cheque es: ${valor} ')
-                print(f'La fecha de origen del cheque es: {fechaOrigen} ')
+                print(f'La fecha de origen del cheque es: {FechaOrigen} ')
                 print(f'La fecha de pago del cheque es: {FechaPago} ')
                 print(f'El tipo de cheque es: {Tipo}')
                 break
