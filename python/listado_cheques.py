@@ -10,7 +10,7 @@
 # Estado: Puede tener 3 valores pendiente, aprobado o rechazado.
 # TIPO: "EMITIDO" O "DEPOSITADO"
 
-from ast import Return, While
+from calendar import c
 import csv
 from logging.config import dictConfig
 from operator import index
@@ -82,9 +82,50 @@ def evaluar(numeroDni):
 evaluar(dni)
 
 def obtenerInfo():
+
+def obtenerInfo():   
     with open("python\info-cheques.csv") as abrirArchivo:
         archivo = csv.DictReader(abrirArchivo)
         for linea in archivo:
-            if dni in linea.values():
-                print(linea)
-obtenerInfo()
+            if dni == linea["DNI"]:
+                documento = linea["NroCheque"]
+                tipoCheque = linea["Tipo"]
+                estadoCheque = linea["Estado"]
+                print(f"el numero de cheque es: {documento}")
+                print(f"el cheque fue {tipoCheque}")
+                print(f"el estado del cheque es: {estadoCheque}")
+                
+
+
+def estadoCheque():   
+    with open("python\info-cheques.csv") as abrirArchivo:
+        archivo = csv.DictReader(abrirArchivo)
+        for linea in archivo:
+            if dni == linea["DNI"] and estado != linea["Estado"]:
+                print('No se encontraron coincidencias con el estado de cheque solicitado para el DNI correspondiente.')
+            if dni == linea["DNI"] and estado == linea["Estado"]:
+                estadoCheque = linea["Estado"]
+                nCheque = linea["NroCheque"]
+                cBanco = linea["CodigoBanco"]
+                cSucursal = linea["CodigoScurusal"]
+                nCO = linea["NumeroCuentaOrigen"]
+                NCD = linea["NumeroCuentaDestino"]
+                valor = linea["Valor"]
+                fechaOrigen = linea["FechaOrigen"]
+                FechaPago = linea["FechaPago"]
+                Tipo = linea["Tipo"]
+
+                
+                print(f'El numero de cheque es: {nCheque} ')
+                print(f'El código de banco es: {cBanco} ')
+                print(f'El código de sucursal es: {cSucursal} ')
+                print(f'El número de cuenta de origen es: {nCO} ')
+                print(f'El número de cuenta de destino es: {NCD} ')
+                print(f'El valor del cheque es: ${valor} ')
+                print(f'La fecha de origen del cheque es: {fechaOrigen} ')
+                print(f'La fecha de pago del cheque es: {FechaPago} ')
+                print(f'El tipo de cheque es: {Tipo}')
+                break
+
+estadoCheque()
+#obtenerInfo()
