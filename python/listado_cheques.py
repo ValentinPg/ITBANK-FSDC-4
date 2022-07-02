@@ -79,9 +79,8 @@ def evaluar(numeroDni):
                 dni = input("Ingrese número de DNI del cliente ")
                 evaluar(dni)
         break
+    obtenerInfo(numeroDni)
 evaluar(dni)
-
-def obtenerInfo():
 
 def obtenerInfo():   
     with open("python\info-cheques.csv") as abrirArchivo:
