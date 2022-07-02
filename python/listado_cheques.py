@@ -43,6 +43,7 @@ def formatoImpreso():
         formato_Pantalla = True
     else:
         formato_csv = True
+        #Deberia retornar el formato elegido en True
 formatoImpreso()
 
 #funcion para elegir visualizar el estado del cheque 
@@ -52,7 +53,8 @@ def pedirEstado():
     if estado == "si":
         visualizar_estado = True
     else:
-        visualizar_estado = False    
+        visualizar_estado = False   
+        #Deberia retornar la opcion elegida en True o False 
 pedirEstado()
 
 def obtenerInfo():   
