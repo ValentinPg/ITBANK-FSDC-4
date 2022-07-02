@@ -18,7 +18,7 @@ import os
 # print("Bienvenido a ITBANK, este es el sistema de busqueda de cheques")
 # print('los datos se encuentran almacenados en el archivo "info cheques.csv"')
 
-dni = input("ingrese el DNI del cliente (sin puntos): ")
+dni = int(input("ingrese el DNI del cliente (sin puntos ni espacios): "))
 
 # while len(dni) != 8:
 #     print("DNI invalido, el numero debe tener 8 digitos")
