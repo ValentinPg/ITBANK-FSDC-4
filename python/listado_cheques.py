@@ -19,7 +19,7 @@ print("Bienvenido a ITBANK, este es el sistema de busqueda de cheques")
 print('los datos se encuentran almacenados en el archivo "info cheques.csv"')
 
 dni = input("ingrese el DNI del cliente (sin puntos): ")
-
+estado = input("Ingrese el estado de cheque que desea conocer (ACEPTADO, RECHAZADO o PENDIENTE.)")
 
 # salida = (input("ingrese si quiere que la salida sea en formato pantalla o CSV: ")).lower()
 
@@ -43,3 +43,25 @@ def obtenerInfo():
                 print(f"el estado del cheque es: {estadoCheque}")
                 
 obtenerInfo()
+
+def estadoCheque():   
+    with open("python\info-cheques.csv") as abrirArchivo:
+        archivo = csv.DictReader(abrirArchivo)
+        for linea in archivo:
+            if dni == linea["DNI"]:
+                estadoCheque = linea["Estado"]
+                
+              
+                if estadoCheque == estado:
+                    print(f'El numero de cheque es: ')
+                    print(f'El código de banco es: ')
+                    print(f'El código de sucursal es: ')
+                    print(f'El número de cuenta de origen es: ')
+                    print(f'El número de cuenta de destino es: ')
+                    print(f'El valor del cheque es: $')
+                    print(f'La fecha de origen del cheque es: ')
+                    print(f'La fecha de pago del cheque es: ')
+                    print(f'El tipo de cheque es: ')
+                else:
+                     print('No se encontraron coincidencias con el estado de cheque solicitado para el DNI correspondiente.')
+                    
