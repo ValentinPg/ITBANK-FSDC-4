@@ -43,3 +43,6 @@ def obtenerInfo():
                 print(f"el estado del cheque es: {estadoCheque}")
                 
 obtenerInfo()
+
+
+
