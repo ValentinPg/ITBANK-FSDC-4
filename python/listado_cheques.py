@@ -45,6 +45,16 @@ def formatoImpreso():
         formato_csv = True
 formatoImpreso()
 
+#funcion para elegir visualizar el estado del cheque 
+def pedirEstado():
+    # Preguntamos si quiere visualizar el estado en que se encuentra el cheque
+    estado = input("¿Desea visualizar el estado en que se encuentra los datos? ").lower()
+    if estado == "si":
+        visualizar_estado = True
+    else:
+        visualizar_estado = False    
+pedirEstado()
+
 def obtenerInfo():   
     with open("python\info-cheques.csv") as abrirArchivo:
         archivo = csv.DictReader(abrirArchivo)
