@@ -19,7 +19,6 @@ import os
 import datetime
 from queue import Empty
 import time
-from numpy import empty
 
 #da la bienvenida al programa
 print("Bienvenido a ITBANK, este es el sistema de busqueda de cheques")
@@ -67,7 +66,7 @@ def obtenerInfo():
            
 #Establece filtro por estado del cheque
 def estadoCheque(lista):
-    estado = input("Ingrese el estado de cheque que desea conocer (APROBADO, RECHAZADO o PENDIENTE.), Deje vacio para obtener todos los cheques: ")
+    estado = input("Ingrese el estado de cheque que desea conocer (APROBADO, RECHAZADO o PENDIENTE.), Deje vacio para obtener todos los cheques: ").upper()
     elemento = {}
     listado = []   
     for linea in lista:
@@ -112,8 +111,12 @@ def salida(lista):
         elemento["FechaPago"]   = datetime.date.fromtimestamp(int(linea["FechaPago"]))
 
         listado.append(elemento)
+    salida = str(input("Ingrese una salida: VER (Para ver en pantalla), EXPORTAR (Para crear un archivo .CSV):")).upper()
+    #verifica que sea un valor dado
+    while salida != "VER" and salida != "EXPORTAR":
+        salida = str(input("formato incorrecto,ingrese nuevamente (VER o EXPORTAR): ")).upper()
 
-    salida = input("Ingrese una salida: VER (Para ver en pantalla), EXPORTAR (Para crear un archivo .CSV)")
+     
     if salida == "VER":
         for i in listado:
             print(f''' -------------------------------------------------------------------------------------------------
@@ -133,7 +136,6 @@ def salida(lista):
     elif salida == "EXPORTAR":
         print("exportar")
     else:
-        print("parametro incorrecto")
-        
+        pass
 
 salida(estadoCheque(obtenerInfo()))
