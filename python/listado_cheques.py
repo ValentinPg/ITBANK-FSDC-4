@@ -17,89 +17,123 @@ from operator import index
 from optparse import Values
 import os
 import datetime
+from queue import Empty
 import time
+from numpy import empty
+
+#da la bienvenida al programa
 print("Bienvenido a ITBANK, este es el sistema de busqueda de cheques")
 print('los datos se encuentran almacenados en el archivo "info cheques.csv"')
 
-dni = input("ingrese el DNI del cliente (sin puntos): ")
-estado = input("Ingrese el estado de cheque que desea conocer (ACEPTADO, RECHAZADO o PENDIENTE.): ")
-# salida = (input("ingrese si quiere que la salida sea en formato pantalla o CSV: ")).lower()
-
-# while salida != "pantalla" and salida != "csv":
-#     print("fromato invallido, por favor ingrese otra vez")
-#     salida = (input("ingrese si quiere que la salida sea en formato pantalla o CSV: ")).lower()
-
-
-def obtenerInfo():   
+#extrae la informacion del archivo .csv
+def obtenerInfo():
+    #se establece el filtro por DNI
+    dni = input("ingrese el DNI del cliente (sin puntos): ")
+    elemento = {}
+    listado = []
+    #Accede al archivo
     with open("python\info-cheques.csv") as abrirArchivo:
+        #Abre el archivo como lector
         archivo = csv.DictReader(abrirArchivo)
         for linea in archivo:
+            #Busca coincidencias con el filtro por DNI
             if dni == linea["DNI"]:
-                numeroCheque = linea["NroCheque"]
-                CodigoBanco = linea["CodigoBanco"]
-                tipoCheque = linea["Tipo"]
-                estadoCheque = linea["Estado"]
-                CodigoSucursal = linea["CodigoScurusal"]
-                NumeroCuentaOrigen = linea["NumeroCuentaOrigen"]
-                NumeroCuentaDestino = linea["NumeroCuentaDestino"]
-                Valor = linea["Valor"]
-                #convierto a int para tener la fecha
-                linea["FechaOrigen"] = int(linea["FechaOrigen"])
-                FechaOrigen = datetime.date.fromtimestamp(linea["FechaOrigen"])
-                #convierto a int para tener la fecha
-                linea["FechaPago"] = int(linea["FechaPago"])
-                FechaPago = datetime.date.fromtimestamp(linea["FechaPago"])
+            
+            #Extrae los datos Filtrados
+                elemento["DNI"],                elemento["NroCheque"]           = linea["DNI"],                linea["NroCheque"]
+                elemento["CodigoBanco"],        elemento["Tipo"]                = linea["CodigoBanco"],        linea["Tipo"]
+                elemento["Estado"],             elemento["CodigoSucursal"]      = linea["Estado"],             linea["CodigoSucursal"]
+                elemento["NumeroCuentaOrigen"], elemento["FechaOrigen"]         = linea["NumeroCuentaOrigen"], linea["FechaOrigen"]
+                elemento["Valor"],              elemento["NumeroCuentaDestino"] = linea["Valor"],              linea["NumeroCuentaDestino"]
+                elemento["FechaPago"]                                           = linea["FechaPago"]
+                listado.append(elemento)
 
-                print(f"El numero del cheque es {numeroCheque}")
-                print(f"El codigo del banco es {CodigoBanco}")
-                print(f"El tipo de cheque es {tipoCheque}")
-                print(f"El código de la sucursal es {CodigoSucursal}")
-                print(f"El número de la cuenta de origen es {NumeroCuentaOrigen}")
-                print(f"El número de la cuenta de destino es {NumeroCuentaDestino}")
-                print(f"El cheque tiene un monto de {Valor} pesos")
-                print(f"El cheque fue emitido: {FechaOrigen}")
-                print(f"El cheque fue pagado {FechaPago}")
-                print(f"El estado del cheque es: {estadoCheque}\n")
-    abrirArchivo.close()      
+    #Cierra el archivo
+    abrirArchivo.close()
+    #Si no se estrajo datos se vuelve a realizar la funcion
+    if len(listado) == 0:
+        print("El numero ingresado es invalido o No se han encontrado Coincidencias\n Por Favor")
+        return obtenerInfo()
+    
+    #Mensaje de salida para 1 dato
+    elif len(listado) == 1:
+        print(f"Se han encontrado {len(listado)} coincidencia")
+        return listado
+
+    #Mensaje de salida para más de 1 dato
+    else:
+        print(f"Se han encontrado {len(listado)} coincidencias")
+        return listado  
            
+#Establece filtro por estado del cheque
+def estadoCheque(lista):
+    estado = input("Ingrese el estado de cheque que desea conocer (APROBADO, RECHAZADO o PENDIENTE.), Deje vacio para obtener todos los cheques: ")
+    elemento = {}
+    listado = []   
+    for linea in lista:
+        #si la variable estado es igual al estado de algun cheque o si la variable esta vacia
+        if estado == linea["Estado"] or not estado:
+            #si la variable esta vacia devuelve todos los elementos de la lista
+            #si la variable es igual al estado solo devuelve los elementos en ese estado
 
+            #extrae los datos filtrados
 
-                
+            elemento["DNI"],                elemento["NroCheque"]           = linea["DNI"],                linea["NroCheque"]
+            elemento["CodigoBanco"],        elemento["Tipo"]                = linea["CodigoBanco"],        linea["Tipo"]
+            elemento["Estado"],             elemento["CodigoSucursal"]      = linea["Estado"],             linea["CodigoSucursal"]
+            elemento["NumeroCuentaOrigen"], elemento["FechaOrigen"]         = linea["NumeroCuentaOrigen"], linea["FechaOrigen"]
+            elemento["Valor"],              elemento["NumeroCuentaDestino"] = linea["Valor"],              linea["NumeroCuentaDestino"]
+            elemento["FechaPago"]                                           = linea["FechaPago"]
+            listado.append(elemento)
 
+    if len(listado) == 0:
+        print("El Parametro ingresado es invalido o No se han encontrado Coincidencias\n Por Favor")
+        return estadoCheque(lista)
+    elif len(listado) == 1:
+        print(f"Se han encontrado {len(listado)} coincidencia")
+        return listado
+    else:
+        print(f"Se han encontrado {len(listado)} coincidencias")
+        return listado  
+            
 
-def estadoCheque():   
-    with open("python\info-cheques.csv") as abrirArchivo:
-        archivo = csv.DictReader(abrirArchivo)
-        for linea in archivo:
-            if dni == linea["DNI"] and estado != linea["Estado"]:
-                print('No se encontraron coincidencias con el estado de cheque solicitado para el DNI correspondiente.')
-            if dni == linea["DNI"] and estado == linea["Estado"]:
-                estadoCheque = linea["Estado"]
-                nCheque = linea["NroCheque"]
-                cBanco = linea["CodigoBanco"]
-                cSucursal = linea["CodigoScurusal"]
-                nCO = linea["NumeroCuentaOrigen"]
-                NCD = linea["NumeroCuentaDestino"]
-                valor = linea["Valor"]
-                linea["FechaOrigen"] = int(linea["FechaOrigen"])
-                FechaOrigen = datetime.date.fromtimestamp(linea["FechaOrigen"])
-                #convierto a int para tener la fecha
-                linea["FechaPago"] = int(linea["FechaPago"])
-                FechaPago = datetime.date.fromtimestamp(linea["FechaPago"])
-                Tipo = linea["Tipo"]
+def salida(lista):
+    elemento = {}
+    listado = []   
+    for linea in lista:
 
-                
-                print(f'El numero de cheque es: {nCheque} ')
-                print(f'El código de banco es: {cBanco} ')
-                print(f'El código de sucursal es: {cSucursal} ')
-                print(f'El número de cuenta de origen es: {nCO} ')
-                print(f'El número de cuenta de destino es: {NCD} ')
-                print(f'El valor del cheque es: ${valor} ')
-                print(f'La fecha de origen del cheque es: {FechaOrigen} ')
-                print(f'La fecha de pago del cheque es: {FechaPago} ')
-                print(f'El tipo de cheque es: {Tipo}')
-                break
+        elemento["DNI"],                elemento["NroCheque"]           = linea["DNI"],                linea["NroCheque"]
+        elemento["CodigoBanco"],        elemento["Tipo"]                = linea["CodigoBanco"],        linea["Tipo"]
+        elemento["Estado"],             elemento["CodigoSucursal"]      = linea["Estado"],             linea["CodigoSucursal"]
+        elemento["NumeroCuentaOrigen"], elemento["Valor"]               = linea["NumeroCuentaOrigen"], linea["Valor"]
+        elemento["NumeroCuentaDestino"]                                 = linea["NumeroCuentaDestino"]
 
-estadoCheque()
-#obtenerInfo()
+        elemento["FechaOrigen"] = datetime.date.fromtimestamp(int(linea["FechaOrigen"]))
+        elemento["FechaPago"]   = datetime.date.fromtimestamp(int(linea["FechaPago"]))
 
+        listado.append(elemento)
+
+    salida = input("Ingrese una salida: VER (Para ver en pantalla), EXPORTAR (Para crear un archivo .CSV)")
+    if salida == "VER":
+        for i in listado:
+            print(f''' -------------------------------------------------------------------------------------------------
+
+ Cheque N°{elemento["NroCheque"]}
+ 
+ Fecha de Emision: {elemento["FechaOrigen"]}         Fecha de Pago: {elemento["FechaPago"]}
+
+ DNI: {elemento["DNI"]}           Sucursal: {elemento["CodigoSucursal"]}            Codigo: {elemento["CodigoBanco"]}
+
+ Cuenta de Origen: {elemento["NumeroCuentaOrigen"]}               Cuenta de Destino: {elemento["NumeroCuentaDestino"]}
+
+ Tipo de Cheque: {elemento["Tipo"]}         Estado del Cheque: {elemento["Estado"]}
+
+ Monto: {elemento["Valor"]} $
+ -------------------------------------------------------------------------------------------------''')
+    elif salida == "EXPORTAR":
+        print("exportar")
+    else:
+        print("parametro incorrecto")
+        
+
+salida(estadoCheque(obtenerInfo()))
