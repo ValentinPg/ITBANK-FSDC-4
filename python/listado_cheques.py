@@ -43,26 +43,41 @@ def obtenerInfo():
                 elemento["Valor"],              elemento["NumeroCuentaDestino"] = linea["Valor"],              linea["NumeroCuentaDestino"]
                 elemento["FechaPago"]                                           = linea["FechaPago"]
                 listado.append(elemento.copy())
+<<<<<<< HEAD
+
+        #Detección de duplicados 
+        for  i in range(len(listado)):
+            coincidencias= 0
+            dato = listado[i]["NroCheque"]
+            for i in range(len(listado)):
+                if dato == listado[i]["NroCheque"]:
+                    coincidencias +=1
+                    if coincidencias > 1:
+                        print("Error, el numero de cheque ya se encuentra en la base de datos")
+                        exit()
+
+=======
+>>>>>>> 844be71c39c821d3bcfcf845635945fdf1813f19
                 
     #Cierra el archivo
     abrirArchivo.close()
     #Si no se estrajo datos se vuelve a realizar la funcion
     if len(listado) == 0:
         print("El numero ingresado es invalido o No se han encontrado Coincidencias\n Por Favor")
-        print(listado)
+        
         return obtenerInfo()
     
     #Mensaje de salida para 1 dato
     elif len(listado) == 1:
         print(f"Se han encontrado {len(listado)} coincidencia")
-        #print(listado)
+       
 
         return listado
 
     #Mensaje de salida para más de 1 dato
     else:
         print(f"Se han encontrado {len(listado)} coincidencias")
-        #print(listado)
+    
         return listado  
            
 #Establece filtro por estado del cheque
