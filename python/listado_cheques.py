@@ -1,25 +1,22 @@
-# NroCheque: Número de cheque, este debe ser único por cuenta.
-# CodigoBanco: Código numérico del banco, entre 1 y 100.
-# CodigoSucursal: Código numérico de la sucursal del banco va entre 1 y 300.
-# NumeroCuentaOrigen: Cuenta de origen del cheque.
-# NumeroCuentaDestino: Cuenta donde se cobra el cheque.
-# Valor: float con el valor del cheque.
-# FechaOrigen: Fecha de emisión: (En timestamp)
-# FechaPago: Fecha de pago o cobro del cheque (En timestamp)
+# # NroCheque: Número de cheque, este debe ser único por cuenta.
+# # CodigoBanco: Código numérico del banco, entre 1 y 100.
+# # CodigoSucursal: Código numérico de la sucursal del banco va entre 1 y 300.
+# # NumeroCuentaOrigen: Cuenta de origen del cheque.
+# # NumeroCuentaDestino: Cuenta donde se cobra el cheque.
+# # Valor: float con el valor del cheque.
+# # FechaOrigen: Fecha de emisión: (En timestamp)
+# # FechaPago: Fecha de pago o cobro del cheque (En timestamp)
 
-# Estado: Puede tener 3 valores pendiente, aprobado o rechazado.
-# TIPO: "EMITIDO" O "DEPOSITADO"
+# # Estado: Puede tener 3 valores pendiente, aprobado o rechazado.
+# # TIPO: "EMITIDO" O "DEPOSITADO"
 
-from calendar import c
+from ast import Return
 import csv
-from logging.config import dictConfig
-from operator import index
 from optparse import Values
 import os
-import datetime
 from queue import Empty
-import time
-
+import datetime
+horarios = [None]
 #da la bienvenida al programa
 print("Bienvenido a ITBANK, este es el sistema de busqueda de cheques")
 print('los datos se encuentran almacenados en el archivo "info cheques.csv"')
@@ -46,8 +43,7 @@ def obtenerInfo():
                 elemento["Valor"],              elemento["NumeroCuentaDestino"] = linea["Valor"],              linea["NumeroCuentaDestino"]
                 elemento["FechaPago"]                                           = linea["FechaPago"]
                 listado.append(elemento.copy())
-                print(listado)
-
+                
     #Cierra el archivo
     abrirArchivo.close()
     #Si no se estrajo datos se vuelve a realizar la funcion
@@ -138,8 +134,15 @@ def salida(lista):
  Monto: {listado[i]["Valor"]} $
  -------------------------------------------------------------------------------------------------''')
     elif salida == "EXPORTAR":
-        print("exportar")
-    else:
-        pass
+        tiempo()
+        with open(f'python\{str(elemento["DNI"])} {tiempo()}.csv', "w") as escribirArchivo:
+            for i in range(len(listado)):
+                escribirArchivo.writelines(f'Fecha de emision:{listado[i]["FechaOrigen"]}\n' f'Fecha de pago: {listado[i]["FechaPago"]}\n' f'Monto cheque: {listado[i]["Valor"]}\n' f'Cuenta de origen: {listado[i]["NumeroCuentaOrigen"]}\n')
+        escribirArchivo.close()
+            
+def tiempo():
+    from datetime import datetime
+    hoy = datetime.now().strftime("%H-%M-%S")
+    return hoy
 
 salida(estadoCheque(obtenerInfo()))
