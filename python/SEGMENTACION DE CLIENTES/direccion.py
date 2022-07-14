@@ -7,7 +7,14 @@ class Direccion():
         self.cp = cp
 
     def __str__(self):
-        return f"({self.calle} {self.numero} {self.ciudad} {self.estado} {self.cp})
+        return f'({self.calle} {self.numero} {self.ciudad} {self.estado} {self.cp})'
     
 
-d = Direccion(a, 2, b, c, 3)
+d = Direccion()
+d.calle = artigas
+d.numero = 10
+d.ciudad = caracas
+d.estado = america
+d.cp= 4400
+
+print(d)
