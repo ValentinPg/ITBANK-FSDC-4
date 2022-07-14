@@ -40,6 +40,7 @@ class Caja_ahorro_pesos(Cuenta):
         def prueboExtraccion(self):
             if self.monto > self.limite_extraccion_diario:
                 print("ERROR: Limite de extraccion diario superado")
+                exit()
                 
         
         #el limite de extraccion cambia segun el tipo de cliente
@@ -65,6 +66,7 @@ class Caja_ahorro_pesos(Cuenta):
         def prueboRecepcion(self):
             if self.monto > self.limite_transferencia_recibida:
                 print("ERROR: Superado el limite de transferencia permitido")
+                exit()
         
         if self.tipo_cliente == "CLASSIC":
             self.limite_transferencia_recibida = 150000
@@ -110,6 +112,6 @@ class Cuenta_corriente(Cuenta):
 
 
 #pRUEBa
-xa = Caja_ahorro_pesos(tipo_cliente="BLACK", monto=1, saldo_descubierto_disponible=0)
-xa = xa.limiteRecepcion()
+xa = Caja_ahorro_pesos(tipo_cliente="CLASSIC", monto=20001, saldo_descubierto_disponible=100000)
+xa = xa.limiteExtraccion()
 print(xa)
