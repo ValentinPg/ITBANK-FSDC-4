@@ -44,6 +44,8 @@ def obtenerInfo():
                 elemento["FechaPago"]                                           = linea["FechaPago"]
                 listado.append(elemento.copy())
 
+
+
         #Detección de duplicados 
         for  i in range(len(listado)):
             coincidencias= 0
@@ -54,6 +56,7 @@ def obtenerInfo():
                     if coincidencias > 1:
                         print("Error, el numero de cheque ya se encuentra en la base de datos")
                         exit()
+
 
                 
     #Cierra el archivo
