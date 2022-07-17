@@ -1,5 +1,5 @@
 class Direccion():
-    def __init__(self, calle: str, numero: int, ciudad: str, estado: str, cp: int) -> None:
+    def __init__(self, calle: str, numero: str, ciudad: str, estado: str, cp: str) -> None:
         self.calle = calle
         self.numero = numero
         self.ciudad = ciudad
@@ -7,7 +7,7 @@ class Direccion():
         self.cp = cp
 
     def __str__(self):
-        return f'({self.calle} {self.numero} {self.ciudad} {self.estado} {self.cp})'
+        return f'(calle:{self.calle}\n numero:{self.numero}\n ciudad:{self.ciudad}\n prvincia:{self.estado}\n pais:{self.cp})'
     
 
 # d = Direccion()
