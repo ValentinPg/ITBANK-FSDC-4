@@ -45,4 +45,6 @@ class Json(object):
 
 # print(Json(eventos_black).obtenerDireccion("calle"))
 
+# print(Json(eventos_black).ObtenerRazon())
+
 
