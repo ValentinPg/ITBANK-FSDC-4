@@ -1,3 +1,7 @@
+
+from moduloCuenta import Cuenta_corriente,Caja_ahorro,Caja_dolares
+from direccion import Direccion
+
 class Cliente():
     def __init__(self) -> None:
         pass
@@ -37,9 +41,10 @@ class Cliente():
         
 
 
-class Cuenta_clasica(Cliente):
+class Cliente_clasico(Cliente):
     def __init__(self) -> None:
         super().__init__()
+        self.caja_ahorro = Caja_ahorro(limite_extraccion_diario=10000,costo_transferencias=0.01,limite_transferencia_recibida=150000)
 
     def puede_crear_cheuqera():
         return False
@@ -48,21 +53,30 @@ class Cuenta_clasica(Cliente):
     def puede_comprar_dolar():
         return False
 
-class Cuenta_gold(Cliente):
-        def puede_crear_cheuqera():
+class Cliente_gold(Cliente):
+    def __init__(self) -> None:
+        super().__init__()
+        self.caja_ahorro = Caja_ahorro(costo_transferencias=0.05,limite_extraccion_diario=20000)
+        self.cuenta_corriente = Cuenta_corriente(limite_extraccion_diario=-10000,costo_transferencias=0.005,limite_transferencia_recibida=500000)
+        self.caja_dolares = Caja_dolares()
+        
+    def puede_crear_cheuqera():
             return False
-        def puede_crear_tarjeta_credito():
+    def puede_crear_tarjeta_credito():
             return True
-        def puede_comprar_dolar():
+    def puede_comprar_dolar():
             return False
 
-class Cuenta_black(Cliente):
-        def puede_crear_cheuqera():
+class Cliente_black(Cliente):
+    def __init__(self) -> None:
+        super().__init__()
+        self.caja_ahorro = Caja_ahorro(limite_extraccion_diario=100000)
+        self.cuenta_corriente = Cuenta_corriente(limite_extraccion_diario=-10000)
+        self.caja_dolares = Caja_dolares()
+        
+    def puede_crear_cheuqera():
             return True
-        def puede_crear_tarjeta_credito():
+    def puede_crear_tarjeta_credito():
             return True
-        def puede_comprar_dolar():
+    def puede_comprar_dolar():
             return True
-
-usuario_1 = Cuenta_clasica
-usuario_1.obtener_nombre('lucas')

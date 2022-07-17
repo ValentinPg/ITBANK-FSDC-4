@@ -10,11 +10,11 @@ class Direccion():
         return f'({self.calle} {self.numero} {self.ciudad} {self.estado} {self.cp})'
     
 
-d = Direccion()
-d.calle = artigas
-d.numero = 10
-d.ciudad = caracas
-d.estado = america
-d.cp= 4400
+# d = Direccion()
+# d.calle = artigas
+# d.numero = 10
+# d.ciudad = caracas
+# d.estado = america
+# d.cp= 4400
 
-print(d)
+# print(d)
