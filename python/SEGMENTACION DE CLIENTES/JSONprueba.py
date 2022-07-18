@@ -5,6 +5,7 @@ eventos_black= "python\ejemplos_json\eventos_black.json"
 eventos_gold = "python\ejemplos_json\eventos_gold.json"
 eventos_classic = "python\ejemplos_json\eventos_classic.json"
 listado = []
+razones = []
 
 class Json(object):
     
@@ -28,8 +29,8 @@ class Json(object):
         with open(self.archivo,"r") as file:
             datos = json.load(file)
             for x in datos["transacciones"]:
-                return x["tipo"]
-        return listado
+                if x["estado"] == "RECHAZADA":
+                    razones.append(copy(x))
     
     def obtenerDireccion(self,dato):
         with open(self.archivo,"r") as file:
@@ -45,6 +46,8 @@ class Json(object):
 
 # print(Json(eventos_black).obtenerDireccion("calle"))
 
-# print(Json(eventos_black).ObtenerRazon())
+Json(eventos_black).ObtenerRazon()
+print(razones)
+
 
 

@@ -2,7 +2,7 @@
 from moduloCuenta import Cuenta_corriente,Caja_ahorro,Caja_dolares
 from direccion import Direccion
 from JSONprueba import Json,eventos_black,eventos_classic,eventos_gold
-from razones import Razon, RazonAltaChequera
+from razones import RazonAltaChequera,RazonAltaTarjetaCredito,RazonRetiroEectivo,RazonCompraDolar,RazonTransferenciaEnviada,RazonTransferenciaRecibida
 
 
 
@@ -88,7 +88,20 @@ def iniciarPrograma(archivo):
     elif file.obtenerDatos("tipo") == "BLACK":
         return Cliente_black(archivo)
     
-x =iniciarPrograma(eventos_black)
-print(Razon(x).verificar())
+x =iniciarPrograma(eventos_classic)
+# Razon(x).verificar()
         
-# print(Cliente_clasico(eventos_classic).caja_ahorro.limite_transferencia_recibida)
+# print(Cliente_clasico(eventos_classic).transacciones)
+
+# print(RazonAltaChequera(x,x.transacciones).resolver())
+# print(RazonAltaTarjetaCredito(x,x.transacciones).resolver())
+# print(RazonRetiroEectivo(x,x.transacciones).resolver())
+# print(RazonCompraDolar(x,x.transacciones).resolver())
+# print(RazonTransferenciaEnviada(x,x.transacciones).resolver())
+# print(RazonTransferenciaRecibida(x,x.transacciones).resolver())
+
+for x in [RazonAltaChequera(x,x.transacciones).resolver(),RazonTransferenciaRecibida(x,x.transacciones).resolver(),RazonTransferenciaEnviada(x,x.transacciones).resolver(),RazonCompraDolar(x,x.transacciones).resolver(),RazonRetiroEectivo(x,x.transacciones).resolver(),RazonAltaTarjetaCredito(x,x.transacciones).resolver(),RazonAltaChequera(x,x.transacciones).resolver()]:
+    if x == None:
+        pass
+    else:
+        print(x)
