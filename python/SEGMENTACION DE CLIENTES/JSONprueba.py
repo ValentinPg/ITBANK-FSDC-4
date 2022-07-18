@@ -28,7 +28,7 @@ class Json(object):
         with open(self.archivo,"r") as file:
             datos = json.load(file)
             for x in datos["transacciones"]:
-                listado.append(copy(x))
+                return x["tipo"]
         return listado
     
     def obtenerDireccion(self,dato):

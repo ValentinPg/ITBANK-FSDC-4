@@ -13,6 +13,7 @@ class Cliente():
         self.apellido = self.archivo.obtenerDatos("apellido")
         self.numero = self.archivo.obtenerDatos("numero")
         self.dni = self.archivo.obtenerDatos("dni")
+        self.tipo = self.archivo.obtenerDatos("tipo")
         self.direccion = Direccion(calle=self.archivo.obtenerDireccion("calle"),numero=self.archivo.obtenerDireccion("numero"),ciudad=self.archivo.obtenerDireccion("ciudad"), estado=self.archivo.obtenerDireccion("provincia"), cp=self.archivo.obtenerDireccion("pais"))
         self.transacciones = self.archivo.obtenerTransacciones()
         self.maxCredito = 0
@@ -47,7 +48,7 @@ class Cliente_clasico(Cliente):
 class Cliente_gold(Cliente):
     def __init__(self, archivo) -> None:
         super().__init__(archivo)
-        self.caja_ahorro = Caja_ahorro(costo_transferencias=0.05,limite_extraccion_diario=20000)
+        self.caja_ahorro = Caja_ahorro(costo_transferencias=0.05,limite_extraccion_diario=20000,limite_transferencia_recibida=500000)
         self.cuenta_corriente = Cuenta_corriente(limite_extraccion_diario=-10000,costo_transferencias=0.005,limite_transferencia_recibida=500000)
         self.caja_dolares = Caja_dolares()
         self.maxCredito = 1
@@ -88,6 +89,6 @@ def iniciarPrograma(archivo):
         return Cliente_black(archivo)
     
 x =iniciarPrograma(eventos_black)
-Razon(x)
+print(Razon(x).verificar())
         
-# print(Cliente_clasico(eventos_classic).transacciones)
+# print(Cliente_clasico(eventos_classic).caja_ahorro.limite_transferencia_recibida)
