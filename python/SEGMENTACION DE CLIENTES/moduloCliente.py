@@ -16,7 +16,6 @@ class Cliente():
         self.tipo = self.archivo.obtenerDatos("tipo")
         self.direccion = Direccion(calle=self.archivo.obtenerDireccion("calle"),numero=self.archivo.obtenerDireccion("numero"),ciudad=self.archivo.obtenerDireccion("ciudad"), estado=self.archivo.obtenerDireccion("provincia"), cp=self.archivo.obtenerDireccion("pais"))
         self.transacciones = self.archivo.obtenerTransacciones()
-        self.rechazados = self.archivo.ObtenerRazon()
         self.maxCredito = 0
         self.maxChequera = 0
         self.caja_ahorro = None
@@ -89,7 +88,7 @@ def iniciarPrograma(archivo):
     elif file.obtenerDatos("tipo") == "BLACK":
         return Cliente_black(archivo)
     
-x =iniciarPrograma(eventos_classic)
+# x =iniciarPrograma(eventos_classic)
 # Razon(x).verificar()
         
 # print(Cliente_clasico(eventos_classic).transacciones)

@@ -2,6 +2,7 @@ from ast import Return
 from copy import copy
 from http import client
 from mimetypes import init
+from pydoc import apropos
 from moduloCuenta import Cuenta_corriente,Caja_ahorro,Caja_dolares
 from direccion import Direccion
 from JSONprueba import Json,eventos_black,eventos_classic,eventos_gold
@@ -26,20 +27,6 @@ from JSONprueba import Json,eventos_black,eventos_classic,eventos_gold
 #         print("AAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
 
         
-# class RazonAltaChequera(Razon):
-#     def __init__(self,diccionario, archivo=None) -> None:
-#         self.diccionario = diccionario
-        
-#     def resolver(self,cliente,evento):
-#         self.cliente = cliente
-#         self.evento = evento
-#         for x in self.diccionario:
-#             if x["tipo"] == self.evento:
-#                 if self.diccionario["totalChequerasActualmente"] >= self.cliente.maxChequera:
-#                     print ("Limite de chequeras alcanzado")
-                    
-#                 else:
-#                     pass
 
 # class RazonAltaTarjetaCredito(Razon):
 #     def __init__(self) -> None:
@@ -136,13 +123,14 @@ class RazonAltaChequera(Razon):
     aprobados, rechazados = [],[]
     
     def resolver(self, cliente):
-        super().resolver(cliente)
+        self.cliente = cliente
         for key in self.cliente.transacciones:
             if key["tipo"] == "ALTA_CHEQUERA":
                 try:
                     if key["totalChequerasActualmente"] >= self.cliente.maxChequera:
                         key["razon"] = "ha superado el limte de chequeras"
                         RazonAltaChequera.rechazados.append(key)
+                        print(len(self.cliente.transacciones))
                     else:
                         RazonAltaChequera.aprobados.append(key)
                 except Exception:
@@ -154,13 +142,60 @@ class RazonAltaChequera(Razon):
 
 
 class RazonAltaTarjetaCredito(Razon):
-    pass
+    def __init__(self, type=None) -> None:
+        super().__init__(type)
+    
+    aprobados, rechazados = [],[]
+    
+    def resolver(self, cliente):
+        super().resolver(cliente)
+        for key in self.cliente.transacciones:
+            if key["tipo"] == "ALTA_TARJETA_CREDITO":
+                try:
+                    if key["totalTarjetasDeCreditoActualmente"] >= self.cliente.maxCredito:
+                        key["razon"] = "ha superado el limte de tarjetas de credito"
+                        RazonAltaTarjetaCredito.rechazados.append(key)
+                    else:
+                        RazonAltaTarjetaCredito.aprobados.append(key)
+                except Exception:
+                        key["razon"] = 'este usuario no tiene permitido crear tarjetas de credito'
+                        RazonAltaTarjetaCredito.rechazados.append(key)
 
 class RazonCompraDolar(Razon):
-    pass
+    def __init__(self, type=None) -> None:
+        super().__init__(type)
+        
+    aprobados, rechazados = [],[]
+    
+    def resolver(self, cliente):
+        super().resolver(cliente)
+        for key in self.cliente.transacciones:
+            if key["tipo"] == "COMPRA_DOLAR":
+                if cliente.puede_comprar_dolar() is False:
+                    key["razon"] = "cliente no habilitado para comprar dolares"
+                    RazonCompraDolar.rechazados.append(key)
+                else:
+                    RazonCompraDolar.aprobados.append(key)
+
+                    
 
 class RazonRetiroEectivo(Razon):
-    pass
+    def __init__(self, type=None) -> None:
+        super().__init__(type)
+        
+    aprobados, rechazados = [], []
+    
+    def resolver(self, cliente):
+        super().resolver(cliente)
+        for key in self.cliente.transacciones:
+            if key["tipo"] == "RETIRO_EFECTIVO_CAJERO_AUTOMATICO":
+                if key["cupoDiarioRestante"] < key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"]):
+                    key["razon"] = "Cupo diario de extraccion superado"
+                    RazonRetiroEectivo.rechazados.append(key)
+                else:
+                    RazonRetiroEectivo.aprobados.append(key)
+                    
+                    
 
 class RazonRetiroEectivo(Razon):
     pass
