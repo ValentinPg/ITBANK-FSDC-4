@@ -179,7 +179,7 @@ class RazonCompraDolar(Razon):
 
                     
 
-class RazonRetiroEectivo(Razon):
+class RazonRetiroEfectivo(Razon):
     def __init__(self, type=None) -> None:
         super().__init__(type)
         
@@ -191,17 +191,48 @@ class RazonRetiroEectivo(Razon):
             if key["tipo"] == "RETIRO_EFECTIVO_CAJERO_AUTOMATICO":
                 if key["cupoDiarioRestante"] < key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"]):
                     key["razon"] = "Cupo diario de extraccion superado"
-                    RazonRetiroEectivo.rechazados.append(key)
+                    RazonRetiroEfectivo.rechazados.append(key)
                 else:
-                    RazonRetiroEectivo.aprobados.append(key)
+                    RazonRetiroEfectivo.aprobados.append(key)
                     
                     
 
-class RazonRetiroEectivo(Razon):
-    pass
 
 class RazonTransferenciaEnviada(Razon):
-    pass
+    def __init__(self, type=None) -> None:
+        super().__init__(type)
+        
+    aprobados, rechazados = [], []
+    
+    def resolver(self, cliente):
+        super().resolver(cliente)
+        for key in self.cliente.transacciones:
+            if key["tipo"] == "TRANSFERENCIA_ENVIADA":
+                if cliente.tipo == "CLASSIC":
+                    if (key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"])) > key["saldoEnCuenta"]:
+                        key["razon"] = f"En las cuentas {self.cliente.tipo} el saldo no puede quedar negativo"
+                        RazonTransferenciaEnviada.rechazados.append(key)
+                    else:
+                        RazonTransferenciaEnviada.aprobados.append(key)
+                else:
+                    if (key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"])) > (key["saldoEnCuenta"] + self.cliente.cuenta_corriente.limite_extraccion_diario):
+                        key["razon"] = f"Saldo en cuenta insuficiente"
+                        RazonTransferenciaEnviada.rechazados.append(key)
+                    else:
+                        RazonTransferenciaEnviada.aprobados.append(key)
 
 class RazonTransferenciaRecibida(Razon):
-    pass
+    def __init__(self, type=None) -> None:
+        super().__init__(type)
+        
+    aprobados, rechazados = [], []
+    
+    def resolver(self, cliente):
+        super().resolver(cliente)
+        for key in self.cliente.transacciones:
+            if key["tipo"] == "TRANSFERENCIA_RECIBIDA":
+                if key["monto"] > self.cliente.caja_ahorro.limite_transferencia_recibida and self.cliente.caja_ahorro.limite_transferencia_recibida != 0:
+                    key["razon"] = "Limite de transferecia recibida excedidio, debe pedir autorizacion"
+                    RazonTransferenciaRecibida.rechazados.append(key)
+                else:
+                    RazonTransferenciaRecibida.aprobados.append(key)
