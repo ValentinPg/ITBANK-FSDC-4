@@ -88,20 +88,3 @@ def iniciarPrograma(archivo):
     elif file.obtenerDatos("tipo") == "BLACK":
         return Cliente_black(archivo)
     
-# x =iniciarPrograma(eventos_classic)
-# Razon(x).verificar()
-        
-# print(Cliente_clasico(eventos_classic).transacciones)
-
-# print(RazonAltaChequera(x,x.transacciones).resolver())
-# print(RazonAltaTarjetaCredito(x,x.transacciones).resolver())
-# print(RazonRetiroEectivo(x,x.transacciones).resolver())
-# print(RazonCompraDolar(x,x.transacciones).resolver())
-# print(RazonTransferenciaEnviada(x,x.transacciones).resolver())
-# print(RazonTransferenciaRecibida(x,x.transacciones).resolver())
-
-# for x in [RazonAltaChequera(x,x.transacciones).resolver(),RazonTransferenciaRecibida(x,x.transacciones).resolver(),RazonTransferenciaEnviada(x,x.transacciones).resolver(),RazonCompraDolar(x,x.transacciones).resolver(),RazonRetiroEectivo(x,x.transacciones).resolver(),RazonAltaTarjetaCredito(x,x.transacciones).resolver(),RazonAltaChequera(x,x.transacciones).resolver()]:
-#     if x == None:
-#         pass
-#     else:
-#         print(x)

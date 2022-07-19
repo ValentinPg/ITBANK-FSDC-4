@@ -38,29 +38,8 @@ class Json(object):
             datos = json.load(file)
             return datos["direccion"][dato]       
             
-# x = Json(eventos_gold)
-# a = x.obtenerTransacciones("tipo")
-# print(a)
 
-# print(Json(eventos_black).obtenerTransacciones())
-# print(Json(eventos_black).obtenerDatos("tipo"))
 
-# print(Json(eventos_black).obtenerDireccion("calle"))
-
-# transacciones = Json(eventos_classic).obtenerTransacciones()
-# aprobados, rechazados = [],[]
-# for key in transacciones:
-#     if key["tipo"] == "ALTA_CHEQUERA":
-#         try:
-#             if key["totalChequerasActualmente"] >= self.cliente.maxChequera:
-#                 key["razon"] = "ha superado el limte de chequeras"
-#                 rechazados.append(key)
-                
-#             else:
-#                 aprobados.append(key)
-#         except Exception:
-#             key["razon"] = 'este usuario no tiene permitido crear chequeras'
-#             rechazados.append(key)
 
         
 
