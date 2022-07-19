@@ -1,3 +1,4 @@
+from ast import Pass
 from copy import copy
 import json
 
@@ -17,7 +18,7 @@ class Json(object):
         with open(self.archivo,"r") as file:
             datos = json.load(file)
             return datos[dato]
-        
+    aaa = []    
     def obtenerTransacciones(self):
         with open(self.archivo,"r") as file:
             datos = json.load(file)
@@ -30,7 +31,7 @@ class Json(object):
             datos = json.load(file)
             for x in datos["transacciones"]:
                 if x["estado"] == "RECHAZADA":
-                    razones.append(copy(x))
+                    pass
     
     def obtenerDireccion(self,dato):
         with open(self.archivo,"r") as file:
@@ -46,8 +47,21 @@ class Json(object):
 
 # print(Json(eventos_black).obtenerDireccion("calle"))
 
-Json(eventos_black).ObtenerRazon()
-print(razones)
+# transacciones = Json(eventos_classic).obtenerTransacciones()
+# aprobados, rechazados = [],[]
+# for key in transacciones:
+#     if key["tipo"] == "ALTA_CHEQUERA":
+#         try:
+#             if key["totalChequerasActualmente"] >= self.cliente.maxChequera:
+#                 key["razon"] = "ha superado el limte de chequeras"
+#                 rechazados.append(key)
+                
+#             else:
+#                 aprobados.append(key)
+#         except Exception:
+#             key["razon"] = 'este usuario no tiene permitido crear chequeras'
+#             rechazados.append(key)
 
+        
 
 

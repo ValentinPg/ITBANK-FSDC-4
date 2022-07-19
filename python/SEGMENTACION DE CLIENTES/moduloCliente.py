@@ -2,7 +2,7 @@
 from moduloCuenta import Cuenta_corriente,Caja_ahorro,Caja_dolares
 from direccion import Direccion
 from JSONprueba import Json,eventos_black,eventos_classic,eventos_gold
-from razones import RazonAltaChequera,RazonAltaTarjetaCredito,RazonRetiroEectivo,RazonCompraDolar,RazonTransferenciaEnviada,RazonTransferenciaRecibida
+from razones import RazonAltaChequera
 
 
 
@@ -16,6 +16,7 @@ class Cliente():
         self.tipo = self.archivo.obtenerDatos("tipo")
         self.direccion = Direccion(calle=self.archivo.obtenerDireccion("calle"),numero=self.archivo.obtenerDireccion("numero"),ciudad=self.archivo.obtenerDireccion("ciudad"), estado=self.archivo.obtenerDireccion("provincia"), cp=self.archivo.obtenerDireccion("pais"))
         self.transacciones = self.archivo.obtenerTransacciones()
+        self.rechazados = self.archivo.ObtenerRazon()
         self.maxCredito = 0
         self.maxChequera = 0
         self.caja_ahorro = None
@@ -100,8 +101,8 @@ x =iniciarPrograma(eventos_classic)
 # print(RazonTransferenciaEnviada(x,x.transacciones).resolver())
 # print(RazonTransferenciaRecibida(x,x.transacciones).resolver())
 
-for x in [RazonAltaChequera(x,x.transacciones).resolver(),RazonTransferenciaRecibida(x,x.transacciones).resolver(),RazonTransferenciaEnviada(x,x.transacciones).resolver(),RazonCompraDolar(x,x.transacciones).resolver(),RazonRetiroEectivo(x,x.transacciones).resolver(),RazonAltaTarjetaCredito(x,x.transacciones).resolver(),RazonAltaChequera(x,x.transacciones).resolver()]:
-    if x == None:
-        pass
-    else:
-        print(x)
+# for x in [RazonAltaChequera(x,x.transacciones).resolver(),RazonTransferenciaRecibida(x,x.transacciones).resolver(),RazonTransferenciaEnviada(x,x.transacciones).resolver(),RazonCompraDolar(x,x.transacciones).resolver(),RazonRetiroEectivo(x,x.transacciones).resolver(),RazonAltaTarjetaCredito(x,x.transacciones).resolver(),RazonAltaChequera(x,x.transacciones).resolver()]:
+#     if x == None:
+#         pass
+#     else:
+#         print(x)
