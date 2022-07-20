@@ -35,7 +35,28 @@
 
 #--------------------------------
 import html
-from intentoJson import Json ,eventos_black,eventos_classic,eventos_gold
+from JSONprueba import Json ,eventos_black,eventos_classic,eventos_gold
+from razones import RazonAltaChequera,RazonAltaTarjetaCredito,RazonCompraDolar,RazonRetiroEfectivo,RazonTransferenciaEnviada,RazonTransferenciaRecibida
+#variable que va a almacenar todas las transacciones
+transeferencias = None
+
+#funcion que junta todas las transacciones con sus razones de rechazo ya especificadas
+def obtenerRazones(cliente):
+    #invocamos las clases
+    RazonAltaChequera().resolver(cliente)
+    RazonTransferenciaRecibida().resolver(cliente)
+    RazonTransferenciaEnviada().resolver(cliente)
+    RazonRetiroEfectivo().resolver(cliente)
+    RazonCompraDolar().resolver(cliente)
+    RazonAltaTarjetaCredito().resolver(cliente)
+    #juntamos los valores de las listas
+    transeferencias = (RazonAltaChequera().rechazados + RazonAltaChequera().aprobados)
+    transeferencias +=(RazonAltaTarjetaCredito().rechazados + RazonAltaTarjetaCredito().aprobados)
+    transeferencias += (RazonCompraDolar().aprobados + RazonCompraDolar().rechazados)
+    transeferencias += (RazonRetiroEfectivo().aprobados + RazonRetiroEfectivo().rechazados)
+    transeferencias +=(RazonTransferenciaEnviada().rechazados + RazonTransferenciaEnviada().aprobados)
+    transeferencias +=(RazonTransferenciaRecibida().aprobados+ RazonTransferenciaRecibida().rechazados)
+    return transeferencias
 
 
 def conversion():
@@ -48,4 +69,5 @@ def ImprimirHTML():
     with open("python\SEGMENTACION\indexpy.html", "a+"):
         for x in convertido:
             x.split(",")
+
 
