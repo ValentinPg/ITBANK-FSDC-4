@@ -29,7 +29,6 @@ class RazonAltaChequera(Razon):
                     if key["totalChequerasActualmente"] >= self.cliente.maxChequera:
                         key["razon"] = "ha superado el limte de chequeras"
                         RazonAltaChequera.rechazados.append(key)
-                        print(len(self.cliente.transacciones))
                     else:
                         RazonAltaChequera.aprobados.append(key)
                 except Exception:
