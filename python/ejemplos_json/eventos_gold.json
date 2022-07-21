@@ -1,12 +1,12 @@
 {
-	"numero": 100001,
-	"nombre": "Nicolas",
-	"apellido": "Gaston",
-	"dni": "29494777",
+	"numero": 10101010,
+	"nombre": "Lionel",
+	"apellido": "NotMessi",
+	"dni": "44553698",
 	"tipo": "GOLD",
 	"direccion" : {
-		"calle" : "Rivadavia",
-		"numero" : "7900",
+		"calle" : "Lacroze",
+		"numero" : "120",
 		"ciudad": "Capital Federal",
 		"provincia" : "Buenos Aires",
 		"pais": "Argentina"
@@ -29,7 +29,7 @@
 			"tipo": "RETIRO_EFECTIVO_CAJERO_AUTOMATICO",
 			"cuentaNumero": 190,
 			"cupoDiarioRestante": 15000,
-			"monto": 11000,
+			"monto": 110000,
 			"fecha": "10/06/2022 16:40:55",
 			"numero": 2,
 			"saldoEnCuenta": 10000,
