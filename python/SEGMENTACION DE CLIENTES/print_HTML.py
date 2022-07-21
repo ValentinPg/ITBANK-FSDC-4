@@ -1,40 +1,6 @@
-# import html as html
-# from intentoJson import Json,eventos_black,eventos_classic,eventos_gold
-
-
-# # import intentoJson
-# # from intentoJson import Json,eventos_black,eventos_classic,eventos_gold
-
-
-
-# file = Json(eventos_black)
-
-# class HTML(object):
-#     def __init__(self,imprimirTexto) -> None:
-#         self.imprimirTexto = imprimirTexto
-    
-#     def imprimirHTML(self):
-#         archivo = open("python\SEGMENTACION DE CLIENTES\indexpy.html", "w")
-#         htmlBase = f"""<html>
-#         <head>
-#         <title>INFORME CLIENTE</title>
-#         <h1>CLIENTE NR: {file.obtenerDatos("numero")} </h1>    <h1>NOMBRE:{file.obtenerDatos("nombre")}</h1>   <h1>APELLIDO:{file.obtenerDatos("apellido")}</h1>      <h1> DNI:{file.obtenerDatos("dni")} </h1>
-#         </head>
-#         <body>
-#         <h2>Se realizaron las siguientes operaciones:{file.obtenerTransacciones()}</h2>
-  
-#         <p></p>
-  
-#         </body>
-#         </html>
-#         """
-#         archivo.write(htmlBase)
-#         archivo.close()
-        
-# HTML("hola").imprimirHTML()
-
-#--------------------------------
 import html
+import json
+from pprint import pprint
 from JSONprueba import Json ,eventos_black,eventos_classic,eventos_gold
 from razones import RazonAltaChequera,RazonAltaTarjetaCredito,RazonCompraDolar,RazonRetiroEfectivo,RazonTransferenciaEnviada,RazonTransferenciaRecibida
 #variable que va a almacenar todas las transacciones
@@ -59,15 +25,28 @@ def obtenerRazones(cliente):
     return transeferencias
 
 
-def conversion():
-    convertido = json.loads(eventos_black)
-    convertido.replace(",","")
-    convertido.replace(":","")
-    return convertido
+def conversion(lista):
+    for x in enumerate(lista):
+        with open("python\SEGMENTACION DE CLIENTES\indexpy.html", "a+") as e:
+            e.write (f"""<p>{x}</p>\n""")
 
-def ImprimirHTML():
-    with open("python\SEGMENTACION\indexpy.html", "a+"):
-        for x in convertido:
-            x.split(",")
+def plantillaHTML(cliente):
+    archivoHTML = open("python\SEGMENTACION DE CLIENTES\indexpy.html", "w")
+    htmlBase = f"""<html>
+    <head>
+    <title>INFORME CLIENTE</title>
+    <h1>CLIENTE NR: {cliente.numero} </h1>    <h1>NOMBRE:{cliente.nombre}</h1>   <h1>APELLIDO:{cliente.apellido}</h1>      <h1> DNI:{cliente.dni} </h1>
+    <h1>DIRECCION:</h1><p>PAIS: {cliente.direccion.cp}</p>
+    <p>PROVINCIA: {cliente.direccion.estado}</p>
+    <p>CIUDAD: {cliente.direccion.ciudad}</p>
+    <p>CALLE: {cliente.direccion.calle}</p>
+    <p>NUMERO: {cliente.direccion.numero}</p>
+    </head>
+    <body>
+    <p>Se realizaron las siguientes operaciones:</p>
 
+    """
+    archivoHTML.write(htmlBase)
+    archivoHTML.close()
+    conversion(obtenerRazones(cliente))
 
