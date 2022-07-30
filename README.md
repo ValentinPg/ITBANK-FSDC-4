@@ -7,5 +7,5 @@ Integrantes:
 2-Martin Gabriel Reale Latini
 3-Valentín Tubaro
 4-Mariano Lena
-5-Melina Van Ackere
+5-Hernan Oses
 6-Valentín Pugliese
