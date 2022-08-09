@@ -1,0 +1,23 @@
+{
+  "name": "itbank-fsdc-4-1",
+  "version": "1.0.0",
+  "description": "Repositorio de la comision 4 del curso Full Stack Developer del ITBA",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ValentinPg/ITBANK-FSDC-4.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ValentinPg/ITBANK-FSDC-4/issues"
+  },
+  "homepage": "https://github.com/ValentinPg/ITBANK-FSDC-4#readme",
+  "dependencies": {
+    "bootstrap": "^5.2.0-beta1"
+  }
+}
