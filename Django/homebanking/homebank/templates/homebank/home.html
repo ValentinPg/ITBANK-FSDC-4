@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        {% load static %}
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/68c779ccf0.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="{%static 'homebank/style.css'%}">
         <title>ITBANK</title>   
     </head>
 
@@ -89,20 +90,20 @@
             </article>
         </div>
         <div id="informacion">
-            <button><p>TRANSFERENCIAS</p><img src="Icons/transferencias.png" alt="transferencias"></button>
-            <button><p>PAGO DE SERVICIOS</p><img src="Icons/pago_servicios.png" alt="pago de SERVICIOS"></button>
-            <button><p>PRESTAMOS</p><img src="Icons/prestamos.png" alt="prestamos"></button>
-            <button><p>SEGUROS</p><img src="Icons/Security.png" alt="seguros"></button>
-            <button><p>ASISTENCIA</p><img src="Icons/Asistencia.png" alt="Asistencia"></button>
-            <button><p>INVERSIONES</p><img src="Icons/inversiones.png" alt="inversiones"></button>
+            <button><p>TRANSFERENCIAS</p><img src="{%static 'homebank/Icons/transferencias.png'%}" alt="transferencias"></button>
+            <button><p>PAGO DE SERVICIOS</p><img src="{%static 'homebank/Icons/pago_servicios.png'%}" alt="pago de SERVICIOS"></button>
+            <button><p>PRESTAMOS</p><img src="{%static 'homebank/Icons/prestamos.png'%}" alt="prestamos"></button>
+            <button><p>SEGUROS</p><img src="{%static 'homebank/Icons/Security.png'%}" alt="seguros"></button>
+            <button><p>ASISTENCIA</p><img src="{%static 'homebank/Icons/Asistencia.png'%}" alt="Asistencia"></button>
+            <button><p>INVERSIONES</p><img src="{%static 'homebank/Icons/inversiones.png'%}" alt="inversiones"></button>
         
         </div>
         <div id="promociones">
           
-            <button><p>PUNTOS DE INTERES</p><img src="icons/Puntos en comun.png" alt=""></button>
-            <button><p>COBROS</p><img src="icons/cobros.png" alt="cobros"></button>
-            <button><p>DESCUENTOS Y OFERTAS</p><img src="icons/png-descuento-ofertas.png" alt="Descuentos y OFERTAS"></button>
-            <button><p>LOCALES Y COMERCIOS</p><img src="icons/Locales_comercio.png" alt=""></button>
+            <button><p>PUNTOS DE INTERES</p><img src="{%static 'icons/Puntos en comun.png'%}" alt=""></button>
+            <button><p>COBROS</p><img src="{%static 'icons/cobros.png'%}" alt="cobros"></button>
+            <button><p>DESCUENTOS Y OFERTAS</p><img src="{%static 'icons/png-descuento-ofertas.png'%}" alt="Descuentos y OFERTAS"></button>
+            <button><p>LOCALES Y COMERCIOS</p><img src="{%static 'icons/Locales_comercio.png'%}" alt=""></button>
             <button class="btn-danger" onclick="imprimirDolar(); visualizacionOn();" ><a href="#cotizaciones"><p>Cotizacion</p></a></button>
 
         
@@ -128,6 +129,6 @@
             </div>
         </div>
 
-        <script src="home.js"></script>
+        <script src="{%static 'homebank/home.js'%}"></script>
     </body>
 </html>
