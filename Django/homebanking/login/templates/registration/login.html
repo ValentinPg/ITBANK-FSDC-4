@@ -16,6 +16,7 @@
     <title>ITBANK</title>
 </head>
 <body>
+    {% block header %}
     <div class="header">
         <div class="header-conteiner">
             <div class="logo">
@@ -38,47 +39,37 @@
             </div>
         </div>
     </div>
+    {% endblock header %}
     <article class="fondo">
         <div class="container d-flex justify-content-center align-items-center vh-100 vw-100">
             <div class="card border-0 " style="width: 350px">
                 <img src="Icons/itba.jpg" alt="" class="border-none img-fluid">
                 <div class="card-body bg-dark text-light">
-                    <h5 class="text">Inicio de sesión</h5>
                     <p>
-                        <form>
+
+                        <form action="" method="post">{% csrf_token %}
+                            <h5 class="text">Inicio de sesión</h5>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">
-                                    Dirección de mail
-                                </label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                <div id="emailHelp" class="form-text">
-                                </div>
+                                <label for="username">Nombre de Usuario</label>
+                                <input type="text" class="form-control" name="username" required id="id_username">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label" >
-                                    Contraseña
-                                </label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
+                                <label for="username">Contraseña</label>
+                                <input type="password" class="form-control" required id="id_password">
                             </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">
-                                    Acepto termínos y condiciones.
-                                </label>
-                            </div>
-                            <a href="home.html">
-                            <button type="submit" class="btn btn-primary">
-                                <a href="home.html" class="link-light"> Siguiente </a>
-                            </button>
-                            
+                            <p><input type="submit" class="btn btn-primary" value="Ingresar">
+                            </p>
                         </form>
                         <div class="text-align-center">
                             <a href="#">¿Olvidaste tu contraseña?</a> o <a href="#">Registrarse</a>
                         </div>
+                        {% block content %}
+                        {% endblock content %}
                     </p>
                 </div> 
             </div>
         </div>
+        {% block footer %}
         <div class="footer">
             <div>
                 <ol class="footer-contenido">
@@ -97,6 +88,11 @@
                 </ol>
             </div>
         </div>
+        {% endblock footer %}
     </article>
 </body>
 </html>
+
+{% comment %}user: definitivo
+            adress: definitivo@itbank.com
+            password: definitivo    {% endcomment %}
