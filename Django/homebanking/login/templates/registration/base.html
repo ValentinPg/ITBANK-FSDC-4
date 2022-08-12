@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="rhAQgXJ0h9Jc1H-C.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Comic+Neue:wght@700&family=Inter:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'login/sass/custom.css'%}">
+    <script src="https://kit.fontawesome.com/68c779ccf0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{%static 'login/style.css'%}">
+    <title>ITBANK</title>
+</head>
+<body>
+    
+    <div class="header">
+        <div class="header-conteiner">
+            <div class="logo">
+                <a href="VanAckereMA.html" class="titulo">ITBANK</a>
+            </div>
+            <ul class="conteiner-listas">
+                <li> 
+                    <a href="#" class="link-light ">Menú</a>
+                </li>
+                <li>
+                    <a href="#" class="link-light d-none d-lg-block"> About Us</a>
+                </li>
+                <li>
+                  <a href="#" class="link-light d-none d-lg-block"> Help</a>  
+                </li>
+            </ul>
+            <div class="conteiner-buscador d-none d-lg-block">
+                <input type="text">
+                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </div>
+    </div>
+    {% block content %}{% endblock content %}
+    
+ 
+
+        <div class="footer">
+            <div>
+                <ol class="footer-contenido">
+                    <li>ITBANK</li>
+                    <li>Buenos Aires - Argentina </li>
+                        <ol>
+                            <li>Colaboradores:</li>
+                            <li>Lucas Miranda</li>
+                            <li>Martin Gabriel Reale Latini</li>
+                            <li>Valentín Tubaro</li>
+                            <li>Mariano Lena</li>
+                            <li>Melina Van Ackere</li>
+                            <li>Valentín Pugliese</li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+    </article>
+</body>
+</html>
