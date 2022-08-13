@@ -132,3 +132,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/homebank/'
 LOGOUT_REDIRECT_URL = '/'
+
+# AUTH_USER_MODEL = 'clientes.Usuario'

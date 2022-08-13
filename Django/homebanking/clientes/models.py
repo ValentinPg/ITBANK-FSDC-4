@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class Cliente(models.Model):
@@ -37,3 +38,6 @@ class Direccion(models.Model):
     class Meta:
         managed = False
         db_table = 'direccion'
+
+# class Usuario(AbstractUser):
+#     telefono = models.CharField('Télefono', max_length=15)
