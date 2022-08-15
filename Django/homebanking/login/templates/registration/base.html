@@ -32,11 +32,24 @@
                 <li>
                   <a href="#" class="link-light d-none d-lg-block"> Help</a>  
                 </li>
+                {% if not request.user.is_authenticated %}
+                <li><a class="nav-link" href="{% url 'login' %}">Acceder</a>
+                </li>
+                {% else %}
+                <li>
+                    <a class="nav-link" href="{% url 'logout' %}">Salir</a>
+                </li>
+                {% endif %}
             </ul>
+            {% if request.user.is_authenticated %}
             <div class="conteiner-buscador d-none d-lg-block">
-                <input type="text">
-                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                <p>Usted esta accediendo como el usuario: {{user.get_username}}</p>
             </div>
+            {% else %}
+            <div class="conteiner-buscador d-none d-lg-block">
+                <p></p>
+            </div>
+            {% endif %}
         </div>
     </div>
     {% block content %}{% endblock content %}

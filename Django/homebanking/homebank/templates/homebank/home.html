@@ -28,10 +28,17 @@
                     <li>Menú</li>
                     <li>About Us</li>
                     <li>Help</li>
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
                 </ul>
-                <div class="conteiner-buscador ">
-                    <input type="text">
-                    <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                {% if request.user.is_authenticated %}
+                <div class="conteiner-buscador d-none d-lg-block">
+                    <p>Usted esta accediendo como el usuario: {{user.get_username}}</p>
+                </div>
+                {% else %}
+                <div class="conteiner-buscador d-none d-lg-block">
+                    <p></p>
+                </div>
+                {% endif %}
                 </div>
             </div>
         </div>
