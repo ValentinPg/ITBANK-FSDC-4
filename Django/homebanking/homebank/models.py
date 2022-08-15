@@ -16,5 +16,5 @@ class SolicitudesPrestamos(models.Model):
     fecha_modificacion = models.DateTimeField(auto_now_add=True, null=True, verbose_name="fecha de modificación")
     
     
-    usuario = models.IntegerField()
+    customer_id = models.IntegerField()
     
