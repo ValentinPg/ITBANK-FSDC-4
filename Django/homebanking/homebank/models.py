@@ -1,6 +1,6 @@
-
 from urllib import request
 from django.db import models
+from clientes.models import Cliente
 
 from clientes.models import User
 
