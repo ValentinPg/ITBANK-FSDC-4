@@ -1,0 +1,19 @@
+{% extends 'registration/base.html' %}
+{% load static %}
+
+
+{% block content %}
+{% if 'OK' in request.GET %}
+<h1>Formulario enviado correctamente, puede cerrar la pestaña</h1>
+{% else %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="formg-group">
+        <table>
+            {{form.as_p}}
+        </table>
+        <input type="submit" value="Enviar">
+    </div>
+</form>
+{% endif %}
+{% endblock content %}
