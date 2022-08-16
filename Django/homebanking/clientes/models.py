@@ -1,3 +1,4 @@
+from random import randrange
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -9,6 +10,7 @@ class Cliente(models.Model):
     customer_dni = models.TextField(db_column='customer_DNI')  # Field name made lowercase.
     dob = models.TextField(blank=True, null=True)
     branch_id = models.IntegerField()
+    tipoid = models.IntegerField(db_column='tipoId', blank="True", null="True")
 
     class Meta:
         managed = False
@@ -39,5 +41,5 @@ class Direccion(models.Model):
         managed = False
         db_table = 'direccion'
 
-# class Usuario(AbstractUser):
-#     telefono = models.CharField('Télefono', max_length=15)
+class User(AbstractUser):
+    customer = models.ForeignKey(Cliente, on_delete=models.CASCADE, default=randrange(1,505)) #esta puesto para que gener un numero random como prueba, la idea es que cuando el usuario se registre o cuanda vaya a autenticarse ingrese su numero de cliente y este es unico.

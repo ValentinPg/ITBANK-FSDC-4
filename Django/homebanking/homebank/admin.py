@@ -1,3 +1,6 @@
 from django.contrib import admin
+from homebank.models import SolicitudesPrestamos
 
-# Register your models here.
+class SolicitudAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(SolicitudesPrestamos,SolicitudAdmin)
