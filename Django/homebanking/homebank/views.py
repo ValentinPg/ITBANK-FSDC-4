@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from cuentas.models import Cuenta
-from clientes.models import User
+from clientes.models import Cliente
 
 from homebank.models import SolicitudesPrestamos
 
@@ -25,13 +24,19 @@ def formularioSolicitud(request):
             monto = request.POST.get("monto", "")
             fecha_inicio = request.POST.get("fecha_inicio", "")
             tipo_prestamo = request.POST.get("tipo_prestamo", "")
-            coincidencia = Cuenta.objects.filter(customer_id=clienteId)
-            for x in coincidencia:
-                print(x.cuentaid)
-            
-            
-            entry = SolicitudesPrestamos(monto=monto, fecha_inicio=fecha_inicio, tipo_prestamo=tipo_prestamo, customer_id=current_user.customer_id)
-            entry.save()
-                      
-        return redirect(reverse('prestamos')+ '?OK')
+            customerMatch = Cliente.objects.filter(customer_id=clienteId)
+            for x in customerMatch:
+                tipo_cliente = x.tipoid
+                if tipo_cliente == 1 and int(monto) > 100000: #Clientes Classic (se encuentra en la tabla tipos_cliente)
+                    return redirect(reverse('prestamos')+ '?NO')
+                elif tipo_cliente == 2 and monto > 300000: #Clientes Gold
+                    return redirect(reverse('prestamos')+ '?NO')
+                elif tipo_cliente == 3 and monto > 500000: #clientes Black
+                    return redirect(reverse('prestamos')+ '?NO')
+                else:
+                    entry = SolicitudesPrestamos(monto=monto, fecha_inicio=fecha_inicio, tipo_prestamo=tipo_prestamo, customer_id=current_user.customer_id)
+                    entry.save()
+                    return redirect(reverse('prestamos')+ '?OK')
+                
+                    
     return render(request,"homebank/prestamos.html", {"form":formulario_solicitud})
