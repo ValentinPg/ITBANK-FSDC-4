@@ -4,7 +4,8 @@ from razones import Razon,RazonAltaChequera,RazonAltaTarjetaCredito,RazonCompraD
 from print_HTML import obtenerRazones,plantillaHTML
 
 #-------------------------Ingrese el archivo que se desea escanear (eventos_classic,eventos_gold,eventos_black)---------------------------------------------------------#
-archivo = eventos_gold
-x = iniciarPrograma(archivo)
-plantillaHTML(x)
+# archivo = input("Ingrese el archivo que quiere revisar: ")
+# print(archivo)
+
+iniciarPrograma(eventos_black)
 #--------------------------El archivo HTML se llama: indexpy.html (Caprpeta "SEGMENTACION CLIENTES"-------------------------------------------------------------------------------------------------------#
