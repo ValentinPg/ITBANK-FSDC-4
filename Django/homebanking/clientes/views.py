@@ -6,9 +6,11 @@ from rest_framework.response import Response
 from rest_framework import status
 
 class UserDetail(APIView):
-    def get(self, request, pk):
-        usuario = User.objects.filter(pk=pk).first()
+    def get(self, request):
+        current_user = request.user
+        current_pk = current_user.id
+        usuario = User.objects.filter(id=current_pk).first()
         serializer = UserClienteSerializer(usuario)
         if usuario:
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
