@@ -1,8 +1,4 @@
-from ast import Return
 from copy import copy
-from http import client
-from mimetypes import init
-from pydoc import apropos
 from moduloCuenta import Cuenta_corriente,Caja_ahorro,Caja_dolares
 from direccion import Direccion
 from JSONprueba import Json,eventos_black,eventos_classic,eventos_gold
@@ -83,14 +79,15 @@ class RazonRetiroEfectivo(Razon):
         
     aprobados, rechazados = [], []
     
-    def resolver(self, cliente):
+    def resolver(self, cliente, transaccion):
         super().resolver(cliente)
-        for key in self.cliente.transacciones:
-            if key["cupoDiarioRestante"] < key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"]):
-                key["razon"] = "Cupo diario de extraccion superado"
-                RazonRetiroEfectivo.rechazados.append(key)
-            else:
-                RazonRetiroEfectivo.aprobados.append(key)
+        for key in transaccion:
+            print("---------------------------------------------------------------")
+            # if key["cupoDiarioRestante"] < key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"]):
+            #     key["razon"] = "Cupo diario de extraccion superado"
+            #     RazonRetiroEfectivo.rechazados.append(key)
+            # else:
+            #     RazonRetiroEfectivo.aprobados.append(key)
                     
                     
 

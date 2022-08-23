@@ -1,6 +1,8 @@
 
 from copy import copy
 import json
+from razones import RazonRetiroEfectivo
+
 
 eventos_black= "python\ejemplos_json\eventos_black.json"
 eventos_gold = "python\ejemplos_json\eventos_gold.json"
@@ -26,13 +28,13 @@ class Json(object):
                 listado.append(copy(x))
         return listado
     
-    def ObtenerRazon(self):
+    def ObtenerRazon(self,cliente):
         with open(self.archivo,"r") as file:
             datos = json.load(file)
             transacciones = datos["transacciones"]
             for x in transacciones:
                 if x["estado"] == "RECHAZADA" and x["tipo"] == 'RETIRO_EFECTIVO_CAJERO_AUTOMATICO':
-                    listado.append(copy(x)) #poner razon
+                    RazonRetiroEfectivo().resolver(cliente=cliente,transaccion=x)
                 elif x["estado"] == "RECHAZADA" and x["tipo"] == 'ALTA_CHEQUERA':
                     listado.append(copy(x)) #poner razon
                 elif x["estado"] == "RECHAZADA" and x["tipo"] == 'ALTA_TARJETA_CREDITO':

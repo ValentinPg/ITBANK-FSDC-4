@@ -7,5 +7,6 @@ from print_HTML import obtenerRazones,plantillaHTML
 # archivo = input("Ingrese el archivo que quiere revisar: ")
 # print(archivo)
 
-iniciarPrograma(eventos_black)
+cliente = iniciarPrograma(eventos_black)
+Json(eventos_black).ObtenerRazon(cliente)
 #--------------------------El archivo HTML se llama: indexpy.html (Caprpeta "SEGMENTACION CLIENTES"-------------------------------------------------------------------------------------------------------#
