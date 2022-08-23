@@ -3,9 +3,10 @@ from django.shortcuts import render
 from .serializers import UserClienteSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 
 class UserDetail(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     def get(self, request):
         current_user = request.user
         current_pk = current_user.id
