@@ -35,8 +35,8 @@ class PrestamoDetail(APIView):
     def get(self, request):
         current_user = request.user
         current_pk = current_user.customer_id
-        usuario = Prestamo.objects.filter(customer_id=current_pk).first()
-        serializer = PrestamoSerializer(usuario)
+        usuario = Prestamo.objects.filter(customer_id=current_pk)
+        serializer = PrestamoSerializer(usuario, many=True)
         if usuario:
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
