@@ -1,5 +1,4 @@
 
-from pyexpat import model
 from .models import User, Direccion
 from rest_framework import serializers
 from cuentas.models import Cuenta
