@@ -63,13 +63,13 @@ class SolicitudesPrestamosViewset(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAdminUser]
     
     @action(detail=False, methods='POST')
-    def crear(self,request,format=None,*arg, **kwargs):
+    def crear(self,request,format=None):
         serializer = SolicitudesPrestamosSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+    #item 7
     @action(detail=True, methods='DELETE')
     def borrar(self,request,pk):
         solicitud = SolicitudesPrestamos.objects.filter(id_solicitud=pk).first()
