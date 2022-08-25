@@ -1,4 +1,5 @@
 
+from dataclasses import field
 from .models import User, Direccion
 from rest_framework import serializers
 from cuentas.models import Cuenta
@@ -50,3 +51,4 @@ class SucursalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sucursal
         fields = "__all__"
+        read_only_fields = ("branch_id", "branch_number", "branch_name", "branch_address_id")

@@ -62,22 +62,22 @@ class SolicitudesPrestamosViewset(viewsets.ModelViewSet):
     serializer_class = SolicitudesPrestamosSerializer
     permission_classes = [permissions.IsAdminUser]
     
-    @action(detail=False, methods='POST')
-    def crear(self,request,format=None):
-        serializer = SolicitudesPrestamosSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    #item 7
-    @action(detail=True, methods='DELETE')
-    def borrar(self,request,pk):
-        solicitud = SolicitudesPrestamos.objects.filter(id_solicitud=pk).first()
-        if solicitud:
-            serializer = SolicitudesPrestamosSerializer(solicitud)
-            serializer.delete()
-            return Response(status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    # @action(detail=False, methods='POST')
+    # def crear(self,request,format=None):
+    #     serializer = SolicitudesPrestamosSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # #item 7
+    # @action(detail=True, methods='DELETE')
+    # def borrar(self,request,pk):
+    #     solicitud = SolicitudesPrestamos.objects.filter(id_solicitud=pk).first()
+    #     if solicitud:
+    #         serializer = SolicitudesPrestamosSerializer(solicitud)
+    #         serializer.delete()
+    #         return Response(status=status.HTTP_200_OK)
+    #     return Response(status=status.HTTP_404_NOT_FOUND)
         
     
 #item 8
