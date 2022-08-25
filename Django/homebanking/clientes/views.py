@@ -1,9 +1,9 @@
-from .models import User
+from .models import Direccion, User
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, permissions, generics
-from .serializers import CuentaSerializer, PrestamoSerializer, UserClienteSerializer, TarjetasSerializer, SucursalSerializer
+from rest_framework import status, permissions, generics, viewsets
+from .serializers import CuentaSerializer, PrestamoSerializer, UserClienteSerializer, TarjetasSerializer, SucursalSerializer, DireccionSerializer
 from cuentas.models import Cuenta
 from prestamos.models import Prestamo, Sucursal
 from tarjetas.models import Tarjeta
@@ -54,6 +54,12 @@ class TarjetasList(APIView):
         if current_user.is_staff:
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+#item 8
+class DireccionViewset(viewsets.ModelViewSet):
+    queryset = Direccion.objects.all()
+    serializer_class = DireccionSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     
 #item 9
 class SucursalList(generics.ListAPIView):

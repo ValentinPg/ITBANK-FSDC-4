@@ -1,5 +1,5 @@
 
-from .models import User
+from .models import User, Direccion
 from rest_framework import serializers
 from cuentas.models import Cuenta
 from prestamos.models import Prestamo, Sucursal
@@ -29,6 +29,12 @@ class PrestamoSerializer(serializers.ModelSerializer):
 class TarjetasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tarjeta
+        fields = "__all__"
+
+#item 8
+class DireccionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Direccion
         fields = "__all__"
         
 #item 9
