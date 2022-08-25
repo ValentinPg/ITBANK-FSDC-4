@@ -7,6 +7,7 @@ from .serializers import CuentaSerializer, PrestamoSerializer, UserClienteSerial
 from cuentas.models import Cuenta
 from prestamos.models import Prestamo, Sucursal
 from tarjetas.models import Tarjeta
+from rest_framework.pagination import LimitOffsetPagination
 #item 1
 class UserDetail(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -58,5 +59,6 @@ class TarjetasList(APIView):
 class SucursalList(generics.ListAPIView):
     queryset = Sucursal.objects.all()
     serializer_class = SucursalSerializer
+    pagination_class = LimitOffsetPagination
 
     
