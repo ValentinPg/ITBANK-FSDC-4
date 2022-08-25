@@ -69,6 +69,15 @@ class SolicitudesPrestamosViewset(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(detail=True, methods='DELETE')
+    def borrar(self,request,pk):
+        solicitud = SolicitudesPrestamos.objects.filter(id_solicitud=pk).first()
+        if solicitud:
+            serializer = SolicitudesPrestamosSerializer(solicitud)
+            serializer.delete()
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
         
     
 #item 8
