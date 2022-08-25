@@ -1,9 +1,12 @@
 
+import imp
+from pyexpat import model
 from .models import User, Direccion
 from rest_framework import serializers
 from cuentas.models import Cuenta
 from prestamos.models import Prestamo, Sucursal
 from tarjetas.models import Tarjeta
+from homebank.models import SolicitudesPrestamos
 
 #item 1
 class UserClienteSerializer(serializers.ModelSerializer):
@@ -29,6 +32,12 @@ class PrestamoSerializer(serializers.ModelSerializer):
 class TarjetasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tarjeta
+        fields = "__all__"
+
+#item 6 y 7
+class SolicitudesPrestamosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SolicitudesPrestamos
         fields = "__all__"
 
 #item 8
