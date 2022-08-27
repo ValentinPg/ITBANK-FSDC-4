@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from clientes.models import Profile
 from clientes.models import Cliente
 
 from homebank.models import SolicitudesPrestamos
@@ -15,7 +16,8 @@ def vista(request):
 def formularioSolicitud(request):
     formulario_solicitud = SolicitudPrestamo
     current_user = request.user  #obtengo el usuario loggeado
-    clienteId = current_user.customer_id
+    cliente = Profile.objects.get(user_id=current_user.id)
+    print(cliente.customer_id)
     
     if request.method == "POST":
         formulario_solicitud = formulario_solicitud(data=request.POST)
@@ -24,9 +26,9 @@ def formularioSolicitud(request):
             monto = request.POST.get("monto", "")
             fecha_inicio = request.POST.get("fecha_inicio", "")
             tipo_prestamo = request.POST.get("tipo_prestamo", "")
-            customerMatch = Cliente.objects.filter(customer_id=clienteId)
+            customerMatch = Cliente.objects.get(customer_id=cliente.customer_id)
             for x in customerMatch:
-                tipo_cliente = x.tipoid
+                tipo_cliente = customerMatch.tipoid
                 if tipo_cliente == 1 and int(monto) > 100000: #Clientes Classic (se encuentra en la tabla tipos_cliente)
                     return redirect(reverse('prestamos')+ '?NO')
                 elif tipo_cliente == 2 and monto > 300000: #Clientes Gold
@@ -34,7 +36,7 @@ def formularioSolicitud(request):
                 elif tipo_cliente == 3 and monto > 500000: #clientes Black
                     return redirect(reverse('prestamos')+ '?NO')
                 else:
-                    entry = SolicitudesPrestamos(monto=monto, fecha_inicio=fecha_inicio, tipo_prestamo=tipo_prestamo, customer_id=current_user.customer_id)
+                    entry = SolicitudesPrestamos(monto=monto, fecha_inicio=fecha_inicio, tipo_prestamo=tipo_prestamo, customer_id=cliente.customer_id)
                     entry.save()
                     return redirect(reverse('prestamos')+ '?OK')
                 

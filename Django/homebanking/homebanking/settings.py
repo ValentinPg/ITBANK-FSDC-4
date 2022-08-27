@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     "clientes",
     "cuentas",
     "login",
@@ -118,7 +119,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-AUTH_USER_MODEL = 'clientes.User'
+# AUTH_USER_MODEL = 'clientes.User'
 
 
 # Static files (CSS, JavaScript, Images)
@@ -135,4 +136,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/homebank/'
 LOGOUT_REDIRECT_URL = '/'
 
-# AUTH_USER_MODEL = 'clientes.Usuario'
+REST_FRAMEWORK = {
+'DEFAULT_PAGINATION_CLASS':
+'rest_framework.pagination.PageNumberPagination',
+'PAGE_SIZE': 5
+}
