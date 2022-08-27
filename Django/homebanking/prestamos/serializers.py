@@ -8,6 +8,12 @@ class PrestamoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Prestamo
         fields = ["loan_type", "loan_total"]
+        
+#item 4
+class PrestamoSucursalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Prestamo
+        fields = ["loan_type","loan_total","sucursal_name"]
  
 #item 9        
 class SucursalSerializer(serializers.ModelSerializer):
