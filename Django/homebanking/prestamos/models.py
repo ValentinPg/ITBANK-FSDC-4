@@ -8,6 +8,7 @@ class Prestamo(models.Model):
     loan_date = models.TextField()
     loan_total = models.IntegerField()
     customer_id = models.IntegerField()
+    sucursal_name = models.TextField()
 
     class Meta:
         managed = False
