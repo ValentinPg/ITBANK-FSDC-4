@@ -15,46 +15,7 @@ class UserDetail(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-# #item 2
-# class CuentaDetail(APIView):
-#     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-#     def get(self, request):
-#         current_user = request.user
-#         current_pk = current_user.customer_id
-#         usuario = Cuenta.objects.filter(customer_id=current_pk).first()
-#         serializer = CuentaSerializer(usuario)
-#         if usuario:
-#             return Response(serializer.data, status=status.HTTP_200_OK)
-#         return Response(status=status.HTTP_400_BAD_REQUEST)
-   
-# #item 3 
-# class PrestamoDetail(APIView):
-#     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-#     def get(self, request):
-#         current_user = request.user
-#         current_pk = current_user.customer_id
-#         usuario = Prestamo.objects.filter(customer_id=current_pk)
-#         serializer = PrestamoSerializer(usuario, many=True)
-#         if usuario:
-#             return Response(serializer.data, status=status.HTTP_200_OK)
-#         return Response(status=status.HTTP_400_BAD_REQUEST)
-  
-# #item 5  
-# class TarjetasList(APIView):
-#     permission_classes = [permissions.IsAdminUser]
-#     def get(self, request, pk):
-#         usuario = Tarjeta.objects.filter(customer_id = pk)
-#         serializer = TarjetasSerializer(usuario, many=True)
-#         if usuario:
-#             return Response(serializer.data, status=status.HTTP_200_OK)
-#         return Response(status=status.HTTP_400_BAD_REQUEST)
-    
-# #item 6 y 7
-# class SolicitudesPrestamosViewset(viewsets.ModelViewSet):
-#     queryset = SolicitudesPrestamos.objects.all()
-#     serializer_class = SolicitudesPrestamosSerializer
-#     permission_classes = [permissions.IsAdminUser]
-    
+
         
     
 #item 8
@@ -82,10 +43,6 @@ class DireccionViewset(viewsets.ModelViewSet):
             return Response(status=status.HTTP_400_BAD_REQUEST)
     
     
-# #item 9
-# class SucursalList(generics.ListAPIView):
-#     queryset = Sucursal.objects.all()
-#     serializer_class = SucursalSerializer
-#     pagination_class = LimitOffsetPagination
+
 
     
