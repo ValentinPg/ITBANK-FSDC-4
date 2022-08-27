@@ -136,4 +136,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/homebank/'
 LOGOUT_REDIRECT_URL = '/'
 
-# AUTH_USER_MODEL = 'clientes.Usuario'
+REST_FRAMEWORK = {
+'DEFAULT_PAGINATION_CLASS':
+'rest_framework.pagination.PageNumberPagination',
+'PAGE_SIZE': 5
+}
