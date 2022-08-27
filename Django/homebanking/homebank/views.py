@@ -1,11 +1,16 @@
-from django.shortcuts import render, redirect, HttpResponse
+
+from multiprocessing import Value
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from clientes.models import Cliente
-
 from homebank.models import SolicitudesPrestamos
-
 from .forms import SolicitudPrestamo
+from django.shortcuts import render
+from rest_framework import permissions, viewsets
+from .serializers import SolicitudesPrestamosSerializer
+from homebank.models import SolicitudesPrestamos
+from cuentas.models import Cuenta
 
 @login_required
 def vista(request):
@@ -40,3 +45,29 @@ def formularioSolicitud(request):
                 
                     
     return render(request,"homebank/prestamos.html", {"form":formulario_solicitud})
+
+
+#item 6 y 7
+class SolicitudesPrestamosViewset(viewsets.ModelViewSet):
+    queryset = SolicitudesPrestamos.objects.all()
+    serializer_class = SolicitudesPrestamosSerializer
+    permission_classes = [permissions.IsAdminUser]
+    
+    def destroy(self, request, *args, **kwargs):
+        pk = kwargs["pk"]
+        monto_prestamo = int(SolicitudesPrestamos.objects.get(pk=pk).monto)
+        cliente = SolicitudesPrestamos.objects.get(pk=pk).customer_id
+        balance_cliente = int(Cuenta.objects.get(customer_id=cliente).balance)
+        cuenta_cliente = Cuenta.objects.filter(customer_id=cliente)
+        cuenta_cliente.update(balance = balance_cliente - monto_prestamo)
+        return super().destroy(request, *args, **kwargs)
+    
+    def create(self, request, *args, **kwargs):
+        monto_prestamo = int(request.data.get("monto"))
+        cliente = request.data.get("customer_id")
+        balance_cliente = int(Cuenta.objects.get(customer_id=cliente).balance)
+        cuenta_cliente = Cuenta.objects.filter(customer_id=cliente)
+        cuenta_cliente.update(balance = balance_cliente + monto_prestamo)
+        return super().create(request, *args, **kwargs)
+
+    #	1029897	   
