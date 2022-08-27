@@ -49,7 +49,7 @@ class PrestamoDetail(APIView):
 
 #item 4 
 class PrestamoSucursalDetail(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAdminUser]
     def get(self, request):
         current_user = request.user
         current_pk = current_user.customer_id
