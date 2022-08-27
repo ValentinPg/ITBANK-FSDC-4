@@ -56,28 +56,12 @@ class TarjetasList(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
-#item 6
+#item 6 y 7
 class SolicitudesPrestamosViewset(viewsets.ModelViewSet):
     queryset = SolicitudesPrestamos.objects.all()
     serializer_class = SolicitudesPrestamosSerializer
     permission_classes = [permissions.IsAdminUser]
     
-    # @action(detail=False, methods='POST')
-    # def crear(self,request,format=None):
-    #     serializer = SolicitudesPrestamosSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    # #item 7
-    # @action(detail=True, methods='DELETE')
-    # def borrar(self,request,pk):
-    #     solicitud = SolicitudesPrestamos.objects.filter(id_solicitud=pk).first()
-    #     if solicitud:
-    #         serializer = SolicitudesPrestamosSerializer(solicitud)
-    #         serializer.delete()
-    #         return Response(status=status.HTTP_200_OK)
-    #     return Response(status=status.HTTP_404_NOT_FOUND)
         
     
 #item 8
@@ -86,20 +70,23 @@ class DireccionViewset(viewsets.ModelViewSet):
     serializer_class = DireccionSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     
-    @action(detail= True, methods='PATCH')
-    def actualizar(self, request, pk, *arg, **kwargs):
+    def partial_update(self, request, pk, *arg, **kwargs):
         current_user = request.user
         if current_user.is_staff:
-            direccion = self.get_object(pk)
+            print(pk)
+            direccion = Direccion.objects.get(pk=pk)
             serializer = DireccionSerializer(direccion, data=request.data)
             if serializer.is_valid():
                 serializer.save()
+                return Response(serializer.data,status=status.HTTP_200_OK)
         else:
             current_pk = current_user.customer_id
             direccion = Direccion.objects.filter(customer_id=current_pk)
             serializer = DireccionSerializer(direccion, data=request.data)
             if serializer.is_valid():
                 serializer.save()
+                return Response(serializer.data,status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
     
     
 #item 9
