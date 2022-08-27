@@ -1,11 +1,8 @@
 from random import randrange
 from django.db import models
-from django.contrib.auth.models import User
-from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-
 class Cliente(models.Model):
     customer_id = models.AutoField(primary_key=True)
     customer_name = models.TextField()
@@ -17,7 +14,8 @@ class Cliente(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'cliente'     
+        db_table = 'cliente'
+        
         
 class TiposCliente(models.Model):
     tipoid = models.AutoField(db_column='tipoId', primary_key=True)  # Field name made lowercase.
@@ -43,16 +41,5 @@ class Direccion(models.Model):
         managed = False
         db_table = 'direccion'
 
-
-    
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    customer_id = models.IntegerField(blank=True,null=True, default=1) #esta puesto para que gener un numero random como prueba, la idea es que cuando el usuario se registre o cuanda vaya a autenticarse ingrese su numero de cliente y este es unico.
-    
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance, customer_id=randrange(1,505))
-    else:
-        Profile.objects.update_or_create(user=instance)
-        
+class User(AbstractUser):
+    customer = models.ForeignKey(Cliente, on_delete=models.CASCADE, default=randrange(1,505)) #esta puesto para que gener un numero random como prueba, la idea es que cuando el usuario se registre o cuanda vaya a autenticarse ingrese su numero de cliente y este es unico.
