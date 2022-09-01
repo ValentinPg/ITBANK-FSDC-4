@@ -69,8 +69,11 @@ class RazonCompraDolar(Razon):
         super().resolver(cliente)
         for key in self.cliente.transacciones:
             if key["tipo"] == "COMPRA_DOLAR":
-                if cliente.puede_comprar_dolar() is False:
+                if cliente.puede_comprar_dolar() is False :
                     key["razon"] = "cliente no habilitado para comprar dolares"
+                    RazonCompraDolar.rechazados.append(key)
+                elif key["monto"] > key["saldoEnCuenta"]:
+                    key["razon"] = "Limite de saldo alcanzado"
                     RazonCompraDolar.rechazados.append(key)
                 else:
                     RazonCompraDolar.aprobados.append(key)

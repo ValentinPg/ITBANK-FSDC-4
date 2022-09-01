@@ -59,7 +59,7 @@ class Cliente_gold(Cliente):
     def puede_crear_tarjeta_credito(self):
         return True
     def puede_comprar_dolar(self):
-        return False
+        return True
 
 class Cliente_black(Cliente):
     def __init__(self, archivo) -> None:
