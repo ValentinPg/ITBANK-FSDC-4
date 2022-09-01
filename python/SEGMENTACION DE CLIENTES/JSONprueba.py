@@ -12,6 +12,13 @@ class Json(object):
     
     def __init__(self, archivo) -> None:
         self.archivo = archivo
+        with open(self.archivo, "r") as file: #abro el archivo una sola vez y guardo todo en atributos
+            datos = json.load(file)
+            self.nombre = datos["nombre"]
+            self.apellido = datos["apellido"]
+            self.tipo = datos["tipo"]
+            self.numero = datos["numero"]
+            self.dni = datos["dni"]
     
         
     def obtenerDatos(self,dato):
