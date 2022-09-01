@@ -8,6 +8,7 @@ from print_HTML import obtenerRazones,plantillaHTML
 archivo = input("Ingrese el archivo que desea leer: ")
 
 def iniciarPrograma(archivo):
+    archivo = archivo.upper()
     if archivo == "CLASSIC":
         print(archivo)
         return Cliente_clasico(eventos_classic)
@@ -21,7 +22,7 @@ def iniciarPrograma(archivo):
         print("archivo no reconocido")
 
 
-print(archivo)
+ 
 x = iniciarPrograma(archivo)
 plantillaHTML(x)
 #--------------------------El archivo HTML se llama: indexpy.html (Caprpeta "SEGMENTACION CLIENTES"-------------------------------------------------------------------------------------------------------#
