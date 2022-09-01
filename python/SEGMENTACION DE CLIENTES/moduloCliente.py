@@ -37,11 +37,12 @@ class Cliente_clasico(Cliente):
     def __init__(self, archivo) -> None:
         super().__init__(archivo)
         self.caja_ahorro = Caja_ahorro(limite_extraccion_diario=10000,costo_transferencias=0.01,limite_transferencia_recibida=150000)
+        self.cuenta_corriente = False
 
     def puede_crear_cheuqera(self):
         return False
     def puede_crear_tarjeta_credito(self):
-        return True
+        return False
     def puede_comprar_dolar(self):
         return False
 
@@ -55,11 +56,11 @@ class Cliente_gold(Cliente):
         self.maxChequera = 1
         
     def puede_crear_cheuqera(self):
-        return False
+        return True
     def puede_crear_tarjeta_credito(self):
         return True
     def puede_comprar_dolar(self):
-        return False
+        return True
 
 class Cliente_black(Cliente):
     def __init__(self, archivo) -> None:
@@ -77,14 +78,9 @@ class Cliente_black(Cliente):
         return True
     def puede_comprar_dolar(self):
         return True
+    
+# print(Cliente_black(eventos_black).cuenta_corriente)
 
 
-def iniciarPrograma(archivo):
-    file = Json(archivo)
-    if file.obtenerDatos("tipo") == "CLASSIC":
-        return Cliente_clasico(archivo)
-    elif file.obtenerDatos("tipo") == "GOLD":
-        return Cliente_gold(archivo)
-    elif file.obtenerDatos("tipo") == "BLACK":
-        return Cliente_black(archivo)
+
     
