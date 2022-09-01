@@ -1,6 +1,7 @@
 from JSONprueba import eventos_black,eventos_classic,eventos_gold
 from moduloCliente import Cliente_black,Cliente_clasico,Cliente_gold
 from print_HTML import plantillaHTML
+from JSONprueba import Json
 
 
 
@@ -9,9 +10,12 @@ archivo = input("Ingrese el archivo que desea leer: ")
 
 def iniciarPrograma(archivo):
     archivo = archivo.upper()
+    
     if archivo == "CLASSIC":
         print(archivo)
-        return Cliente_clasico(eventos_classic)
+        archivo = eventos_classic
+        cargado = Json(archivo)
+        return Cliente_clasico(eventos_classic,nombre=cargado.nombre,apellido=cargado.apellido,numero=cargado.apellido,dni=cargado.dni,tipo=cargado.tipo)
     elif archivo == "GOLD":
         print(archivo)
         return Cliente_gold(eventos_gold)
