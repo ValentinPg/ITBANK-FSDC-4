@@ -1,4 +1,4 @@
-from ast import Pass
+
 from copy import copy
 import json
 
@@ -18,7 +18,7 @@ class Json(object):
         with open(self.archivo,"r") as file:
             datos = json.load(file)
             return datos[dato]
-    aaa = []    
+ 
     def obtenerTransacciones(self):
         with open(self.archivo,"r") as file:
             datos = json.load(file)

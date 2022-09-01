@@ -1,6 +1,6 @@
-from JSONprueba import Json,eventos_black,eventos_classic,eventos_gold
+from JSONprueba import eventos_black,eventos_classic,eventos_gold
 from moduloCliente import Cliente_black,Cliente_clasico,Cliente_gold
-from print_HTML import obtenerRazones,plantillaHTML
+from print_HTML import plantillaHTML
 
 
 
