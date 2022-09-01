@@ -79,12 +79,5 @@ class Cliente_black(Cliente):
         return True
 
 
-def iniciarPrograma(archivo):
-    file = Json(archivo)
-    if file.obtenerDatos("tipo") == "CLASSIC":
-        return Cliente_clasico(archivo)
-    elif file.obtenerDatos("tipo") == "GOLD":
-        return Cliente_gold(archivo)
-    elif file.obtenerDatos("tipo") == "BLACK":
-        return Cliente_black(archivo)
+
     
