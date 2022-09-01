@@ -37,6 +37,7 @@ class Cliente_clasico(Cliente):
     def __init__(self, archivo) -> None:
         super().__init__(archivo)
         self.caja_ahorro = Caja_ahorro(limite_extraccion_diario=10000,costo_transferencias=0.01,limite_transferencia_recibida=150000)
+        self.cuenta_corriente = False
 
     def puede_crear_cheuqera(self):
         return False
@@ -77,6 +78,8 @@ class Cliente_black(Cliente):
         return True
     def puede_comprar_dolar(self):
         return True
+    
+# print(Cliente_black(eventos_black).cuenta_corriente)
 
 
 

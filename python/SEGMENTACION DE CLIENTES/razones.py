@@ -112,7 +112,7 @@ class RazonTransferenciaEnviada(Razon):
         super().resolver(cliente)
         for key in self.cliente.transacciones:
             if key["tipo"] == "TRANSFERENCIA_ENVIADA":
-                if cliente.tipo == "CLASSIC":
+                if cliente.cuenta_corriente:
                     if (key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"])) > key["saldoEnCuenta"]:
                         key["razon"] = f"En las cuentas {self.cliente.tipo} el saldo no puede quedar negativo"
                         RazonTransferenciaEnviada.rechazados.append(key)
