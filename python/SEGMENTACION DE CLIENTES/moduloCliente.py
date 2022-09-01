@@ -41,7 +41,7 @@ class Cliente_clasico(Cliente):
     def puede_crear_cheuqera(self):
         return False
     def puede_crear_tarjeta_credito(self):
-        return True
+        return False
     def puede_comprar_dolar(self):
         return False
 
@@ -55,7 +55,7 @@ class Cliente_gold(Cliente):
         self.maxChequera = 1
         
     def puede_crear_cheuqera(self):
-        return False
+        return True
     def puede_crear_tarjeta_credito(self):
         return True
     def puede_comprar_dolar(self):
