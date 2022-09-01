@@ -8,7 +8,7 @@ from JSONprueba import Json,eventos_black,eventos_classic,eventos_gold
 
 class Cliente():
     def __init__(self,archivo, nombre, apellido, numero,dni,tipo = None) -> None:
-        self.archivo = Json(archivo)
+        self.archivo = archivo
         self.nombre = nombre
         self.apellido = apellido
         self.numero = numero

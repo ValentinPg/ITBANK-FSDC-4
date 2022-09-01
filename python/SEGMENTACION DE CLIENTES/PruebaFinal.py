@@ -15,17 +15,17 @@ def iniciarPrograma(archivo):
         print(archivo)
         archivo = eventos_classic
         cargado = Json(archivo)
-        return Cliente_clasico(eventos_classic,nombre=cargado.nombre,apellido=cargado.apellido,numero=cargado.apellido,dni=cargado.dni,tipo=cargado.tipo)
+        return Cliente_clasico(cargado,nombre=cargado.nombre,apellido=cargado.apellido,numero=cargado.apellido,dni=cargado.dni,tipo=cargado.tipo)
     elif archivo == "GOLD":
         print(archivo)
         archivo = eventos_gold
         cargado = Json(archivo)
-        return Cliente_gold(eventos_gold,nombre=cargado.nombre,apellido=cargado.apellido,numero=cargado.apellido,dni=cargado.dni,tipo=cargado.tipo)
+        return Cliente_gold(cargado,nombre=cargado.nombre,apellido=cargado.apellido,numero=cargado.apellido,dni=cargado.dni,tipo=cargado.tipo)
     elif archivo == "BLACK":
         print(archivo)
         archivo = eventos_black
         cargado = Json(archivo)
-        return Cliente_black(eventos_black,nombre=cargado.nombre,apellido=cargado.apellido,numero=cargado.apellido,dni=cargado.dni,tipo=cargado.tipo)
+        return Cliente_black(cargado,nombre=cargado.nombre,apellido=cargado.apellido,numero=cargado.apellido,dni=cargado.dni,tipo=cargado.tipo)
     else:
         print("archivo no reconocido")
 
