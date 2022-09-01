@@ -14,6 +14,7 @@ class Json(object):
     
     def __init__(self, archivo) -> None:
         self.archivo = archivo
+        print("-----------------------------------------------")
     
         
     def obtenerDatos(self,dato):
@@ -53,8 +54,8 @@ class Json(object):
             return datos["direccion"][dato]   
         
         
-x = Json(eventos_black).ObtenerRazon()
-print(listado)
+# x = Json(eventos_black).ObtenerRazon()
+# print(listado)
     
             
 
