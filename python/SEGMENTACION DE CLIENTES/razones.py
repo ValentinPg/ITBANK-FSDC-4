@@ -90,8 +90,11 @@ class RazonRetiroEfectivo(Razon):
         super().resolver(cliente)
         for key in self.cliente.transacciones:
             if key["tipo"] == "RETIRO_EFECTIVO_CAJERO_AUTOMATICO":
-                if key["cupoDiarioRestante"] < key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"]):
+                if key["cupoDiarioRestante"] < key["monto"]:
                     key["razon"] = "Cupo diario de extraccion superado"
+                    RazonRetiroEfectivo.rechazados.append(key)
+                elif key["saldoEnCuenta"] <= key["monto"]:
+                    key["razon"] = "Saldo insuficiente"
                     RazonRetiroEfectivo.rechazados.append(key)
                 else:
                     RazonRetiroEfectivo.aprobados.append(key)
