@@ -23,7 +23,6 @@ def obtenerRazones(cliente):
 
 def conversion(lista):
     for x in enumerate(lista):
-        print(x)
         with open("python\SEGMENTACION DE CLIENTES\indexpy.html", "a+") as e:
             if x[1]['estado'] == 'RECHAZADA':
                 if x[1]['tipo'] == 'ALTA_CHEQUERA':
