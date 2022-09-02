@@ -1,19 +1,19 @@
 
 from moduloCuenta import Cuenta_corriente,Caja_ahorro,Caja_dolares
 from direccion import Direccion
-from JSONprueba import Json,eventos_black,eventos_classic,eventos_gold
-from razones import RazonAltaChequera
+
+
 
 
 
 class Cliente():
-    def __init__(self,archivo = None) -> None:
-        self.archivo = Json(archivo)
-        self.nombre = self.archivo.obtenerDatos("nombre")
-        self.apellido = self.archivo.obtenerDatos("apellido")
-        self.numero = self.archivo.obtenerDatos("numero")
-        self.dni = self.archivo.obtenerDatos("dni")
-        self.tipo = self.archivo.obtenerDatos("tipo")
+    def __init__(self,archivo, nombre, apellido, numero,dni,tipo = None) -> None:
+        self.archivo = archivo
+        self.nombre = nombre
+        self.apellido = apellido
+        self.numero = numero
+        self.dni = dni
+        self.tipo = tipo
         self.direccion = Direccion(calle=self.archivo.obtenerDireccion("calle"),numero=self.archivo.obtenerDireccion("numero"),ciudad=self.archivo.obtenerDireccion("ciudad"), estado=self.archivo.obtenerDireccion("provincia"), cp=self.archivo.obtenerDireccion("pais"))
         self.transacciones = self.archivo.obtenerTransacciones()
         self.maxCredito = 0
@@ -34,8 +34,8 @@ class Cliente():
 
 
 class Cliente_clasico(Cliente):
-    def __init__(self, archivo) -> None:
-        super().__init__(archivo)
+    def __init__(self, archivo, nombre, apellido, numero, dni, tipo=None) -> None:
+        super().__init__(archivo, nombre, apellido, numero, dni, tipo)
         self.caja_ahorro = Caja_ahorro(limite_extraccion_diario=10000,costo_transferencias=0.01,limite_transferencia_recibida=150000)
         self.cuenta_corriente = False
 
@@ -47,8 +47,8 @@ class Cliente_clasico(Cliente):
         return False
 
 class Cliente_gold(Cliente):
-    def __init__(self, archivo) -> None:
-        super().__init__(archivo)
+    def __init__(self, archivo, nombre, apellido, numero, dni, tipo=None) -> None:
+        super().__init__(archivo, nombre, apellido, numero, dni, tipo)
         self.caja_ahorro = Caja_ahorro(costo_transferencias=0.05,limite_extraccion_diario=20000,limite_transferencia_recibida=500000)
         self.cuenta_corriente = Cuenta_corriente(limite_extraccion_diario=-10000,costo_transferencias=0.005,limite_transferencia_recibida=500000)
         self.caja_dolares = Caja_dolares()
@@ -63,8 +63,8 @@ class Cliente_gold(Cliente):
         return True
 
 class Cliente_black(Cliente):
-    def __init__(self, archivo) -> None:
-        super().__init__(archivo)
+    def __init__(self, archivo, nombre, apellido, numero, dni, tipo=None) -> None:
+        super().__init__(archivo, nombre, apellido, numero, dni, tipo)
         self.caja_ahorro = Caja_ahorro(limite_extraccion_diario=100000)
         self.cuenta_corriente = Cuenta_corriente(limite_extraccion_diario=-10000)
         self.caja_dolares = Caja_dolares()

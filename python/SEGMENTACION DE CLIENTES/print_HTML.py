@@ -1,7 +1,3 @@
-import html
-import json
-from pprint import pprint
-from JSONprueba import Json ,eventos_black,eventos_classic,eventos_gold
 from razones import RazonAltaChequera,RazonAltaTarjetaCredito,RazonCompraDolar,RazonRetiroEfectivo,RazonTransferenciaEnviada,RazonTransferenciaRecibida
 #variable que va a almacenar todas las transacciones
 transeferencias = None
