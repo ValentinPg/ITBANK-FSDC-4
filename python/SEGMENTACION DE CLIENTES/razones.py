@@ -18,7 +18,7 @@ class RazonAltaChequera(Razon):
             if key["tipo"] == "ALTA_CHEQUERA":
                 try:
                     if key["totalChequerasActualmente"] >= self.cliente.maxChequera:
-                        key["razon"] = f"ha superado el limte de chequeras de su cuenta, el limite es {self.cliente.maxChequera}"
+                        key["razon"] = f"limite de chequeras alcanzado, limite: {self.cliente.maxChequera}"
                         RazonAltaChequera.rechazados.append(key)
                     else:
                         RazonAltaChequera.aprobados.append(key)
@@ -42,7 +42,7 @@ class RazonAltaTarjetaCredito(Razon):
             if key["tipo"] == "ALTA_TARJETA_CREDITO":
                 try:
                     if key["totalTarjetasDeCreditoActualmente"] >= self.cliente.maxCredito:
-                        key["razon"] = f"ha superado el limte de tarjetas de credito, el limite de esta cuenta es {self.cliente.maxCredito}"
+                        key["razon"] = f"limte de tarjetas de credito alcanzado, limite: {self.cliente.maxCredito}"
                         RazonAltaTarjetaCredito.rechazados.append(key)
                     else:
                         RazonAltaTarjetaCredito.aprobados.append(key)
@@ -82,7 +82,7 @@ class RazonRetiroEfectivo(Razon):
         for key in self.cliente.transacciones:
             if key["tipo"] == "RETIRO_EFECTIVO_CAJERO_AUTOMATICO":
                 if key["cupoDiarioRestante"] < key["monto"]:
-                    key["razon"] = f"Cupo diario de extraccion superado, no puede superar los ${key['cupoDiarioRestante']} por dia"
+                    key["razon"] = f"El monto solicitado excede el cupo diario"
                     RazonRetiroEfectivo.rechazados.append(key)
                 elif key["saldoEnCuenta"] <= key["monto"]:
                     key["razon"] = "Saldo insuficiente"
@@ -111,7 +111,7 @@ class RazonTransferenciaEnviada(Razon):
                         RazonTransferenciaEnviada.aprobados.append(key)
                 else:
                     if (key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"])) > (key["saldoEnCuenta"] + self.cliente.cuenta_corriente.limite_extraccion_diario):
-                        key["razon"] = f"Saldo en cuenta insuficiente"
+                        key["razon"] = f" El saldo restante en cuenta es insuficiente para cubrir el coste de transeferencia: coste de transferencia: {self.cliente.caja_ahorro.costo_transferencias*key['monto']}"
                         RazonTransferenciaEnviada.rechazados.append(key)
                     else:
                         RazonTransferenciaEnviada.aprobados.append(key)
