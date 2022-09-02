@@ -1,7 +1,7 @@
 
 from moduloCuenta import Cuenta_corriente,Caja_ahorro,Caja_dolares
 from direccion import Direccion
-from JSONprueba import Json,eventos_black,eventos_classic,eventos_gold
+
 
 
 
