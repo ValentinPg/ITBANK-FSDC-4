@@ -43,7 +43,9 @@ class Json(object):
     def obtenerDireccion(self,dato):
         with open(self.archivo,"r") as file:
             datos = json.load(file)
-            return datos["direccion"][dato]      
+            return datos["direccion"][dato] 
+        
+        
         
         
 def iniciarPrograma(archivo):
