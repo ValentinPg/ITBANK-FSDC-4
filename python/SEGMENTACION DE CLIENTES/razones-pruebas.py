@@ -1,5 +1,7 @@
 from JSONprueba import Json,eventos_black
 from moduloCliente import Cliente_black
+
+
 class Razon(object):
     def __init__(self,type = None) -> None:
         self.type = str(type)
@@ -14,6 +16,7 @@ class RazonAltaChequera(Razon):
     aprobados, rechazados = [],[]
     
     def resolver(self, cliente, transaccion):
+
         self.cliente = cliente
         if self.cliente.puede_crear_cheuqera():
             if transaccion["totalChequerasActualmente"] >= self.cliente.maxChequera:
@@ -36,19 +39,19 @@ class RazonAltaTarjetaCredito(Razon):
     
     aprobados, rechazados = [],[]
     
-    def resolver(self, cliente):
+    def resolver(self, cliente, transaccion):
         super().resolver(cliente)
-        for key in self.cliente.transacciones:
-            if key["tipo"] == "ALTA_TARJETA_CREDITO":
-                try:
-                    if key["totalTarjetasDeCreditoActualmente"] >= self.cliente.maxCredito:
-                        key["razon"] = f"ha superado el limte de tarjetas de credito, el limite de esta cuenta es {self.cliente.maxCredito}"
-                        RazonAltaTarjetaCredito.rechazados.append(key)
-                    else:
-                        RazonAltaTarjetaCredito.aprobados.append(key)
-                except Exception:
-                        key["razon"] = 'este usuario no tiene permitido crear tarjetas de credito'
-                        RazonAltaTarjetaCredito.rechazados.append(key)
+        if self.cliente.puede_crear_tarjeta_credito():
+            if transaccion["totalTarjetasDeCreditoActualmente"] >= self.cliente.maxCredito:
+                transaccion["razon"] = f"ha superado el limte de tarjetas de credito, el limite de esta cuenta es {self.cliente.maxCredito}"
+                RazonAltaTarjetaCredito.rechazados.append(transaccion)
+            else:
+                RazonAltaTarjetaCredito.aprobados.append(transaccion)
+        else:
+            transaccion["razon"] = 'este usuario no tiene permitido crear tarjetas de credito'
+            RazonAltaTarjetaCredito.rechazados.append(transaccion)
+
+
 
 class RazonCompraDolar(Razon):
     def __init__(self, type=None) -> None:
@@ -142,8 +145,10 @@ def razones(archivo,cliente):
            #separacion por operacion
         if x['tipo'] == 'ALTA_CHEQUERA':
             RazonAltaChequera().resolver(transaccion=x, cliente=cliente)
+            print(RazonAltaChequera.rechazados)
         elif x['tipo'] == 'ALTA_TARJETA_CREDITO':
-            pass
+            RazonAltaTarjetaCredito().resolver(transaccion=x, cliente=cliente)
+            print(RazonAltaTarjetaCredito.aprobados)
         elif x['tipo'] == 'RETIRO_EFECTIVO_CAJERO_AUTOMATICO':
             pass
         elif x['tipo'] == 'COMPRA_DOLAR':
@@ -156,4 +161,5 @@ def razones(archivo,cliente):
             
 
 razones(cliente=cliente,archivo=cargado)
+
     
