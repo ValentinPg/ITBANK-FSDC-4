@@ -139,22 +139,24 @@ def razones(archivo,cliente):
            #separacion por operacion
         if x['tipo'] == 'ALTA_CHEQUERA':
             RazonAltaChequera().resolver(transaccion=x, cliente=cliente)
-            lista += (RazonAltaChequera().aprobados + RazonAltaChequera().rechazados)
+            # lista += (RazonAltaChequera().aprobados + RazonAltaChequera().rechazados)
+            
         elif x['tipo'] == 'ALTA_TARJETA_CREDITO':
             RazonAltaTarjetaCredito().resolver(transaccion=x, cliente=cliente)
-            lista += (RazonAltaTarjetaCredito().aprobados + RazonAltaTarjetaCredito().rechazados)
+            # lista += (RazonAltaTarjetaCredito().aprobados + RazonAltaTarjetaCredito().rechazados)
         elif x['tipo'] == 'RETIRO_EFECTIVO_CAJERO_AUTOMATICO':
             RazonRetiroEfectivo().resolver(transaccion=x, cliente=cliente)
-            lista += (RazonRetiroEfectivo().aprobados + RazonRetiroEfectivo().rechazados)
+            # lista += (RazonRetiroEfectivo().aprobados + RazonRetiroEfectivo().rechazados)
         elif x['tipo'] == 'COMPRA_DOLAR':
             RazonCompraDolar().resolver(transaccion=x,cliente=cliente)
-            lista += (RazonCompraDolar().aprobados + RazonCompraDolar().rechazados)
+            # lista += (RazonCompraDolar().aprobados + RazonCompraDolar().rechazados)
         elif x["tipo"] == "TRANSFERENCIA_ENVIADA":
             RazonTransferenciaEnviada().resolver(transaccion=x, cliente=cliente)
-            lista += (RazonTransferenciaEnviada().aprobados + RazonTransferenciaEnviada().rechazados)
+            # lista += (RazonTransferenciaEnviada().aprobados + RazonTransferenciaEnviada().rechazados)
         elif x["tipo"] == "TRANSFERENCIA_RECIBIDA":
             RazonTransferenciaRecibida().resolver(transaccion=x, cliente=cliente)
-            lista += (RazonTransferenciaRecibida().aprobados + RazonTransferenciaRecibida().rechazados)
-    print(lista)
+            # lista += (RazonTransferenciaRecibida().aprobados + RazonTransferenciaRecibida().rechazados)
+    lista = (RazonAltaChequera().aprobados + RazonAltaChequera().rechazados + RazonAltaTarjetaCredito().aprobados + RazonAltaTarjetaCredito().rechazados + RazonRetiroEfectivo().aprobados + RazonRetiroEfectivo().rechazados + RazonCompraDolar().aprobados + RazonCompraDolar().rechazados + RazonTransferenciaEnviada().aprobados + RazonTransferenciaEnviada().rechazados + RazonTransferenciaRecibida().aprobados + RazonTransferenciaRecibida().rechazados)
+    print(len(lista))
     return lista
     
