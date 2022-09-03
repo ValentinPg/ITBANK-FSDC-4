@@ -80,18 +80,16 @@ class RazonRetiroEfectivo(Razon):
         
     aprobados, rechazados = [], []
     
-    def resolver(self, cliente):
+    def resolver(self, cliente, transaccion):
         super().resolver(cliente)
-        for key in self.cliente.transacciones:
-            if key["tipo"] == "RETIRO_EFECTIVO_CAJERO_AUTOMATICO":
-                if key["cupoDiarioRestante"] < key["monto"]:
-                    key["razon"] = f"Cupo diario de extraccion superado, no puede superar los ${key['cupoDiarioRestante']} por dia"
-                    RazonRetiroEfectivo.rechazados.append(key)
-                elif key["saldoEnCuenta"] <= key["monto"]:
-                    key["razon"] = "Saldo insuficiente"
-                    RazonRetiroEfectivo.rechazados.append(key)
-                else:
-                    RazonRetiroEfectivo.aprobados.append(key)
+        if transaccion["cupoDiarioRestante"] < transaccion["monto"]:
+            transaccion["razon"] = f"Cupo diario de extraccion superado, no puede superar los ${transaccion['cupoDiarioRestante']} por dia"
+            RazonRetiroEfectivo.rechazados.append(transaccion)
+        elif transaccion["saldoEnCuenta"] <= transaccion["monto"]:
+            transaccion["razon"] = "Saldo insuficiente"
+            RazonRetiroEfectivo.rechazados.append(transaccion)
+        else:
+            RazonRetiroEfectivo.aprobados.append(transaccion)
                     
                     
 
@@ -150,7 +148,8 @@ def razones(archivo,cliente):
             RazonAltaTarjetaCredito().resolver(transaccion=x, cliente=cliente)
             print(RazonAltaTarjetaCredito.aprobados)
         elif x['tipo'] == 'RETIRO_EFECTIVO_CAJERO_AUTOMATICO':
-            pass
+            RazonRetiroEfectivo().resolver(transaccion=x, cliente=cliente)
+            print(RazonRetiroEfectivo.rechazados)
         elif x['tipo'] == 'COMPRA_DOLAR':
             pass
         elif x["tipo"] == "TRANSFERENCIA_ENVIADA":
