@@ -157,6 +157,6 @@ def razones(archivo,cliente):
             RazonTransferenciaRecibida().resolver(transaccion=x, cliente=cliente)
             # lista += (RazonTransferenciaRecibida().aprobados + RazonTransferenciaRecibida().rechazados)
     lista = (RazonAltaChequera().aprobados + RazonAltaChequera().rechazados + RazonAltaTarjetaCredito().aprobados + RazonAltaTarjetaCredito().rechazados + RazonRetiroEfectivo().aprobados + RazonRetiroEfectivo().rechazados + RazonCompraDolar().aprobados + RazonCompraDolar().rechazados + RazonTransferenciaEnviada().aprobados + RazonTransferenciaEnviada().rechazados + RazonTransferenciaRecibida().aprobados + RazonTransferenciaRecibida().rechazados)
-    print(len(lista))
+
     return lista
     

@@ -1,24 +1,8 @@
 from razones import razones
-#variable que va a almacenar todas las transacciones
+
 transeferencias = None
 
-#funcion que junta todas las transacciones con sus razones de rechazo ya especificadas
-# def obtenerRazones(cliente):
-#     #invocamos las clases
-#     RazonAltaChequera().resolver(cliente)
-#     RazonTransferenciaRecibida().resolver(cliente)
-#     RazonTransferenciaEnviada().resolver(cliente)
-#     RazonRetiroEfectivo().resolver(cliente)
-#     RazonCompraDolar().resolver(cliente)
-#     RazonAltaTarjetaCredito().resolver(cliente)
-#     #juntamos los valores de las listas
-#     transeferencias = (RazonAltaChequera().rechazados + RazonAltaChequera().aprobados)
-#     transeferencias +=(RazonAltaTarjetaCredito().rechazados + RazonAltaTarjetaCredito().aprobados)
-#     transeferencias += (RazonCompraDolar().aprobados + RazonCompraDolar().rechazados)
-#     transeferencias += (RazonRetiroEfectivo().aprobados + RazonRetiroEfectivo().rechazados)
-#     transeferencias +=(RazonTransferenciaEnviada().rechazados + RazonTransferenciaEnviada().aprobados)
-#     transeferencias +=(RazonTransferenciaRecibida().aprobados+ RazonTransferenciaRecibida().rechazados)
-#     return transeferencias
+
 
 
 def conversion(lista):
