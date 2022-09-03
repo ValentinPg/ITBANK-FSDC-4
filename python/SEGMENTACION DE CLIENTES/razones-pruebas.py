@@ -1,4 +1,5 @@
 from JSONprueba import Json,eventos_black
+from moduloCliente import Cliente_black
 class Razon(object):
     def __init__(self,type = None) -> None:
         self.type = str(type)
@@ -12,19 +13,18 @@ class RazonAltaChequera(Razon):
     
     aprobados, rechazados = [],[]
     
-    def resolver(self, cliente):
+    def resolver(self, cliente, transaccion):
         self.cliente = cliente
-        for key in self.cliente.transacciones:
-            if key["tipo"] == "ALTA_CHEQUERA":
-                try:
-                    if key["totalChequerasActualmente"] >= self.cliente.maxChequera:
-                        key["razon"] = f"ha superado el limte de chequeras de su cuenta, el limite es {self.cliente.maxChequera}"
-                        RazonAltaChequera.rechazados.append(key)
-                    else:
-                        RazonAltaChequera.aprobados.append(key)
-                except Exception:
-                        key["razon"] = 'este usuario no tiene permitido crear chequeras'
-                        RazonAltaChequera.rechazados.append(key)
+        if self.cliente.puede_crear_cheuqera():
+            if transaccion["totalChequerasActualmente"] >= self.cliente.maxChequera:
+                transaccion["razon"] = f"ha superado el limte de chequeras de su cuenta, el limite es {self.cliente.maxChequera}"
+                RazonAltaChequera.rechazados.append(transaccion)
+            else:
+                transaccion["razon"] = ""
+                RazonAltaChequera.aprobados.append(transaccion)
+        else:
+            transaccion["razon"] = 'este usuario no tiene permitido crear chequeras'
+            RazonAltaChequera.rechazados.append(transaccion)
 
  
 
@@ -133,42 +133,27 @@ class RazonTransferenciaRecibida(Razon):
                     RazonTransferenciaRecibida.aprobados.append(key)
         
         
-y = None        
-x = Json(eventos_black)                  
+      
+cargado = Json(eventos_black)
+cliente = Cliente_black(cargado,nombre=cargado.nombre,apellido=cargado.apellido,numero=cargado.apellido,dni=cargado.dni,tipo=cargado.tipo)                  
 def razones(archivo,cliente):
     transacciones = archivo.obtenerTransacciones() #obtengo las transacciones del archivo que parsee
     for x in transacciones:  #itero sobre las transacciones
-        #divido entre rechazadas  aceptadas
-        if x["estado"] == "RECHAZADA": 
-            #separacion por operacion
-            if x['tipo'] == 'ALTA_CHEQUERA':
-                print(x)
-            elif x['tipo'] == 'ALTA_TARJETA_CREDITO':
-                pass
-            elif x['tipo'] == 'RETIRO_EFECTIVO_CAJERO_AUTOMATICO':
-                pass
-            elif x['tipo'] == 'COMPRA_DOLAR':
-                pass
-            elif x["tipo"] == "TRANSFERENCIA_ENVIADA":
-                pass
-            elif x["tipo"] == "TRANSFERENCIA_RECIBIDA":
-                pass
-            
-        elif x["estado"] == "ACEPTADA":
-            
-            if x['tipo'] == 'ALTA_CHEQUERA':
-                print(x)
-            elif x['tipo'] == 'ALTA_TARJETA_CREDITO':
-                pass
-            elif x['tipo'] == 'RETIRO_EFECTIVO_CAJERO_AUTOMATICO':
-                pass
-            elif x['tipo'] == 'COMPRA_DOLAR':
-                pass
-            elif x["tipo"] == "TRANSFERENCIA_ENVIADA":
-                pass
-            elif x["tipo"] == "TRANSFERENCIA_RECIBIDA":
-                pass
-    
+           #separacion por operacion
+        if x['tipo'] == 'ALTA_CHEQUERA':
+            RazonAltaChequera().resolver(transaccion=x, cliente=cliente)
+        elif x['tipo'] == 'ALTA_TARJETA_CREDITO':
+            pass
+        elif x['tipo'] == 'RETIRO_EFECTIVO_CAJERO_AUTOMATICO':
+            pass
+        elif x['tipo'] == 'COMPRA_DOLAR':
+            pass
+        elif x["tipo"] == "TRANSFERENCIA_ENVIADA":
+            pass
+        elif x["tipo"] == "TRANSFERENCIA_RECIBIDA":
+            pass
 
-razones(x,y)
+            
+
+razones(cliente=cliente,archivo=cargado)
     
