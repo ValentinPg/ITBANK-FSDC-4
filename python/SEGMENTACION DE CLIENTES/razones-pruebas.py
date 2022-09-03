@@ -46,6 +46,7 @@ class RazonAltaTarjetaCredito(Razon):
                 transaccion["razon"] = f"ha superado el limte de tarjetas de credito, el limite de esta cuenta es {self.cliente.maxCredito}"
                 RazonAltaTarjetaCredito.rechazados.append(transaccion)
             else:
+                transaccion["razon"] = ""
                 RazonAltaTarjetaCredito.aprobados.append(transaccion)
         else:
             transaccion["razon"] = 'este usuario no tiene permitido crear tarjetas de credito'
@@ -59,18 +60,17 @@ class RazonCompraDolar(Razon):
         
     aprobados, rechazados = [],[]
     
-    def resolver(self, cliente):
+    def resolver(self, cliente, transaccion):
         super().resolver(cliente)
-        for key in self.cliente.transacciones:
-            if key["tipo"] == "COMPRA_DOLAR":
-                if cliente.puede_comprar_dolar() is False :
-                    key["razon"] = "cliente no habilitado para comprar dolares, debe ser BLACK o GOLD"
-                    RazonCompraDolar.rechazados.append(key)
-                elif key["monto"] > key["saldoEnCuenta"]:
-                    key["razon"] = "Limite de saldo alcanzado"
-                    RazonCompraDolar.rechazados.append(key)
-                else:
-                    RazonCompraDolar.aprobados.append(key)
+        if cliente.puede_comprar_dolar() is False :
+            transaccion["razon"] = "cliente no habilitado para comprar dolares, debe ser BLACK o GOLD"
+            RazonCompraDolar.rechazados.append(transaccion)
+        elif transaccion["monto"] > transaccion["saldoEnCuenta"]:
+            transaccion["razon"] = "Limite de saldo alcanzado"
+            RazonCompraDolar.rechazados.append(transaccion)
+        else:
+            transaccion["razon"] = ""
+            RazonCompraDolar.aprobados.append(transaccion)
 
                     
 
@@ -89,7 +89,9 @@ class RazonRetiroEfectivo(Razon):
             transaccion["razon"] = "Saldo insuficiente"
             RazonRetiroEfectivo.rechazados.append(transaccion)
         else:
+            transaccion["razon"] = ""
             RazonRetiroEfectivo.aprobados.append(transaccion)
+            
                     
                     
 
@@ -100,22 +102,23 @@ class RazonTransferenciaEnviada(Razon):
         
     aprobados, rechazados = [], []
     
-    def resolver(self, cliente):
+    def resolver(self, cliente,transaccion):
         super().resolver(cliente)
-        for key in self.cliente.transacciones:
-            if key["tipo"] == "TRANSFERENCIA_ENVIADA":
-                if cliente.cuenta_corriente is False:
-                    if (key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"])) > key["saldoEnCuenta"]:
-                        key["razon"] = f"Saldo insuficiente, en las cuentas {self.cliente.tipo} el saldo no puede quedar negativo"
-                        RazonTransferenciaEnviada.rechazados.append(key)
-                    else:
-                        RazonTransferenciaEnviada.aprobados.append(key)
-                else:
-                    if (key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"])) > (key["saldoEnCuenta"] + self.cliente.cuenta_corriente.limite_extraccion_diario):
-                        key["razon"] = f"Saldo en cuenta insuficiente"
-                        RazonTransferenciaEnviada.rechazados.append(key)
-                    else:
-                        RazonTransferenciaEnviada.aprobados.append(key)
+
+        if cliente.cuenta_corriente is False:
+            if (transaccion["monto"]+(self.cliente.caja_ahorro.costo_transferencias*transaccion["monto"])) > transaccion["saldoEnCuenta"]:
+                transaccion["razon"] = f"Saldo insuficiente, en las cuentas {self.cliente.tipo} el saldo no puede quedar negativo"
+                RazonTransferenciaEnviada.rechazados.append(transaccion)
+            else:
+                transaccion["razon"] = ""
+                RazonTransferenciaEnviada.aprobados.append(transaccion)
+        else:
+            if (transaccion["monto"]+(self.cliente.caja_ahorro.costo_transferencias*transaccion["monto"])) > (transaccion["saldoEnCuenta"] + self.cliente.cuenta_corriente.limite_extraccion_diario):
+                transaccion["razon"] = f"Saldo en cuenta insuficiente"
+                RazonTransferenciaEnviada.rechazados.append(transaccion)
+            else:
+                transaccion["razon"] = ""
+                RazonTransferenciaEnviada.aprobados.append(transaccion)
 
 class RazonTransferenciaRecibida(Razon):
     def __init__(self, type=None) -> None:
@@ -123,15 +126,14 @@ class RazonTransferenciaRecibida(Razon):
         
     aprobados, rechazados = [], []
     
-    def resolver(self, cliente):
+    def resolver(self, cliente,transaccion):
         super().resolver(cliente)
-        for key in self.cliente.transacciones:
-            if key["tipo"] == "TRANSFERENCIA_RECIBIDA":
-                if key["monto"] > self.cliente.caja_ahorro.limite_transferencia_recibida and self.cliente.caja_ahorro.limite_transferencia_recibida != 0:
-                    key["razon"] = "Limite de transferecia recibida excedido, debe pedir autorizacion al banco para realizar transferencias tan grandes"
-                    RazonTransferenciaRecibida.rechazados.append(key)
-                else:
-                    RazonTransferenciaRecibida.aprobados.append(key)
+        if transaccion["monto"] > self.cliente.caja_ahorro.limite_transferencia_recibida and self.cliente.caja_ahorro.limite_transferencia_recibida != 0:
+            transaccion["razon"] = "Limite de transferecia recibida excedido, debe pedir autorizacion al banco para realizar transferencias tan grandes"
+            RazonTransferenciaRecibida.rechazados.append(transaccion)
+        else:
+            transaccion["razon"] = ""
+            RazonTransferenciaRecibida.aprobados.append(transaccion)
         
         
       
@@ -151,11 +153,14 @@ def razones(archivo,cliente):
             RazonRetiroEfectivo().resolver(transaccion=x, cliente=cliente)
             print(RazonRetiroEfectivo.rechazados)
         elif x['tipo'] == 'COMPRA_DOLAR':
-            pass
+            RazonCompraDolar().resolver(transaccion=x,cliente=cliente)
+            print(RazonCompraDolar().rechazados)
         elif x["tipo"] == "TRANSFERENCIA_ENVIADA":
-            pass
+            RazonTransferenciaEnviada().resolver(transaccion=x, cliente=cliente)
+            print(RazonTransferenciaEnviada().rechazados)
         elif x["tipo"] == "TRANSFERENCIA_RECIBIDA":
-            pass
+            RazonTransferenciaRecibida().resolver(transaccion=x, cliente=cliente)
+            print(RazonTransferenciaRecibida().rechazados)
 
             
 
