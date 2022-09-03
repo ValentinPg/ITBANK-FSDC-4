@@ -1,12 +1,3 @@
-from ast import Return
-from copy import copy
-from http import client
-from mimetypes import init
-from pydoc import apropos
-from moduloCuenta import Cuenta_corriente,Caja_ahorro,Caja_dolares
-from direccion import Direccion
-from JSONprueba import Json,eventos_black,eventos_classic,eventos_gold
-
 
 class Razon(object):
     def __init__(self,type = None) -> None:
@@ -21,19 +12,19 @@ class RazonAltaChequera(Razon):
     
     aprobados, rechazados = [],[]
     
-    def resolver(self, cliente):
+    def resolver(self, cliente, transaccion):
+
         self.cliente = cliente
-        for key in self.cliente.transacciones:
-            if key["tipo"] == "ALTA_CHEQUERA":
-                try:
-                    if key["totalChequerasActualmente"] >= self.cliente.maxChequera:
-                        key["razon"] = "ha superado el limte de chequeras"
-                        RazonAltaChequera.rechazados.append(key)
-                    else:
-                        RazonAltaChequera.aprobados.append(key)
-                except Exception:
-                        key["razon"] = 'este usuario no tiene permitido crear chequeras'
-                        RazonAltaChequera.rechazados.append(key)
+        if self.cliente.puede_crear_cheuqera():
+            if transaccion["totalChequerasActualmente"] >= self.cliente.maxChequera:
+                transaccion["razon"] = f"ha superado el limte de chequeras de su cuenta, el limite es {self.cliente.maxChequera}"
+                RazonAltaChequera.rechazados.append(transaccion)
+            else:
+                transaccion["razon"] = ""
+                RazonAltaChequera.aprobados.append(transaccion)
+        else:
+            transaccion["razon"] = 'este usuario no tiene permitido crear chequeras'
+            RazonAltaChequera.rechazados.append(transaccion)
 
  
 
@@ -45,19 +36,20 @@ class RazonAltaTarjetaCredito(Razon):
     
     aprobados, rechazados = [],[]
     
-    def resolver(self, cliente):
+    def resolver(self, cliente, transaccion):
         super().resolver(cliente)
-        for key in self.cliente.transacciones:
-            if key["tipo"] == "ALTA_TARJETA_CREDITO":
-                try:
-                    if key["totalTarjetasDeCreditoActualmente"] >= self.cliente.maxCredito:
-                        key["razon"] = "ha superado el limte de tarjetas de credito"
-                        RazonAltaTarjetaCredito.rechazados.append(key)
-                    else:
-                        RazonAltaTarjetaCredito.aprobados.append(key)
-                except Exception:
-                        key["razon"] = 'este usuario no tiene permitido crear tarjetas de credito'
-                        RazonAltaTarjetaCredito.rechazados.append(key)
+        if self.cliente.puede_crear_tarjeta_credito():
+            if transaccion["totalTarjetasDeCreditoActualmente"] >= self.cliente.maxCredito:
+                transaccion["razon"] = f"ha superado el limte de tarjetas de credito, el limite de esta cuenta es {self.cliente.maxCredito}"
+                RazonAltaTarjetaCredito.rechazados.append(transaccion)
+            else:
+                transaccion["razon"] = ""
+                RazonAltaTarjetaCredito.aprobados.append(transaccion)
+        else:
+            transaccion["razon"] = 'este usuario no tiene permitido crear tarjetas de credito'
+            RazonAltaTarjetaCredito.rechazados.append(transaccion)
+
+
 
 class RazonCompraDolar(Razon):
     def __init__(self, type=None) -> None:
@@ -65,15 +57,17 @@ class RazonCompraDolar(Razon):
         
     aprobados, rechazados = [],[]
     
-    def resolver(self, cliente):
+    def resolver(self, cliente, transaccion):
         super().resolver(cliente)
-        for key in self.cliente.transacciones:
-            if key["tipo"] == "COMPRA_DOLAR":
-                if cliente.puede_comprar_dolar() is False:
-                    key["razon"] = "cliente no habilitado para comprar dolares"
-                    RazonCompraDolar.rechazados.append(key)
-                else:
-                    RazonCompraDolar.aprobados.append(key)
+        if cliente.puede_comprar_dolar() is False :
+            transaccion["razon"] = "cliente no habilitado para comprar dolares, debe ser BLACK o GOLD"
+            RazonCompraDolar.rechazados.append(transaccion)
+        elif transaccion["monto"] > transaccion["saldoEnCuenta"]:
+            transaccion["razon"] = "Limite de saldo alcanzado"
+            RazonCompraDolar.rechazados.append(transaccion)
+        else:
+            transaccion["razon"] = ""
+            RazonCompraDolar.aprobados.append(transaccion)
 
                     
 
@@ -83,15 +77,18 @@ class RazonRetiroEfectivo(Razon):
         
     aprobados, rechazados = [], []
     
-    def resolver(self, cliente):
+    def resolver(self, cliente, transaccion):
         super().resolver(cliente)
-        for key in self.cliente.transacciones:
-            if key["tipo"] == "RETIRO_EFECTIVO_CAJERO_AUTOMATICO":
-                if key["cupoDiarioRestante"] < key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"]):
-                    key["razon"] = "Cupo diario de extraccion superado"
-                    RazonRetiroEfectivo.rechazados.append(key)
-                else:
-                    RazonRetiroEfectivo.aprobados.append(key)
+        if transaccion["cupoDiarioRestante"] < transaccion["monto"]:
+            transaccion["razon"] = f"Cupo diario de extraccion superado, no puede superar los ${transaccion['cupoDiarioRestante']} por dia"
+            RazonRetiroEfectivo.rechazados.append(transaccion)
+        elif transaccion["saldoEnCuenta"] <= transaccion["monto"]:
+            transaccion["razon"] = "Saldo insuficiente"
+            RazonRetiroEfectivo.rechazados.append(transaccion)
+        else:
+            transaccion["razon"] = ""
+            RazonRetiroEfectivo.aprobados.append(transaccion)
+            
                     
                     
 
@@ -102,22 +99,23 @@ class RazonTransferenciaEnviada(Razon):
         
     aprobados, rechazados = [], []
     
-    def resolver(self, cliente):
+    def resolver(self, cliente,transaccion):
         super().resolver(cliente)
-        for key in self.cliente.transacciones:
-            if key["tipo"] == "TRANSFERENCIA_ENVIADA":
-                if cliente.tipo == "CLASSIC":
-                    if (key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"])) > key["saldoEnCuenta"]:
-                        key["razon"] = f"En las cuentas {self.cliente.tipo} el saldo no puede quedar negativo"
-                        RazonTransferenciaEnviada.rechazados.append(key)
-                    else:
-                        RazonTransferenciaEnviada.aprobados.append(key)
-                else:
-                    if (key["monto"]+(self.cliente.caja_ahorro.costo_transferencias*key["monto"])) > (key["saldoEnCuenta"] + self.cliente.cuenta_corriente.limite_extraccion_diario):
-                        key["razon"] = f"Saldo en cuenta insuficiente"
-                        RazonTransferenciaEnviada.rechazados.append(key)
-                    else:
-                        RazonTransferenciaEnviada.aprobados.append(key)
+
+        if cliente.cuenta_corriente is False:
+            if (transaccion["monto"]+(self.cliente.caja_ahorro.costo_transferencias*transaccion["monto"])) > transaccion["saldoEnCuenta"]:
+                transaccion["razon"] = f"Saldo insuficiente, en las cuentas {self.cliente.tipo} el saldo no puede quedar negativo"
+                RazonTransferenciaEnviada.rechazados.append(transaccion)
+            else:
+                transaccion["razon"] = ""
+                RazonTransferenciaEnviada.aprobados.append(transaccion)
+        else:
+            if (transaccion["monto"]+(self.cliente.caja_ahorro.costo_transferencias*transaccion["monto"])) > (transaccion["saldoEnCuenta"] + self.cliente.cuenta_corriente.limite_extraccion_diario):
+                transaccion["razon"] = f"Saldo en cuenta insuficiente"
+                RazonTransferenciaEnviada.rechazados.append(transaccion)
+            else:
+                transaccion["razon"] = ""
+                RazonTransferenciaEnviada.aprobados.append(transaccion)
 
 class RazonTransferenciaRecibida(Razon):
     def __init__(self, type=None) -> None:
@@ -125,12 +123,40 @@ class RazonTransferenciaRecibida(Razon):
         
     aprobados, rechazados = [], []
     
-    def resolver(self, cliente):
+    def resolver(self, cliente,transaccion):
         super().resolver(cliente)
-        for key in self.cliente.transacciones:
-            if key["tipo"] == "TRANSFERENCIA_RECIBIDA":
-                if key["monto"] > self.cliente.caja_ahorro.limite_transferencia_recibida and self.cliente.caja_ahorro.limite_transferencia_recibida != 0:
-                    key["razon"] = "Limite de transferecia recibida excedidio, debe pedir autorizacion"
-                    RazonTransferenciaRecibida.rechazados.append(key)
-                else:
-                    RazonTransferenciaRecibida.aprobados.append(key)
+        if transaccion["monto"] > self.cliente.caja_ahorro.limite_transferencia_recibida and self.cliente.caja_ahorro.limite_transferencia_recibida != 0:
+            transaccion["razon"] = "Limite de transferecia recibida excedido, debe pedir autorizacion al banco para realizar transferencias tan grandes"
+            RazonTransferenciaRecibida.rechazados.append(transaccion)
+        else:
+            transaccion["razon"] = ""
+            RazonTransferenciaRecibida.aprobados.append(transaccion)
+        
+def razones(archivo,cliente):
+    transacciones = archivo.obtenerTransacciones() #obtengo las transacciones del archivo que parsee
+    lista = []
+    for x in transacciones:  #itero sobre las transacciones
+           #separacion por operacion
+        if x['tipo'] == 'ALTA_CHEQUERA':
+            RazonAltaChequera().resolver(transaccion=x, cliente=cliente)
+            # lista += (RazonAltaChequera().aprobados + RazonAltaChequera().rechazados)
+            
+        elif x['tipo'] == 'ALTA_TARJETA_CREDITO':
+            RazonAltaTarjetaCredito().resolver(transaccion=x, cliente=cliente)
+            # lista += (RazonAltaTarjetaCredito().aprobados + RazonAltaTarjetaCredito().rechazados)
+        elif x['tipo'] == 'RETIRO_EFECTIVO_CAJERO_AUTOMATICO':
+            RazonRetiroEfectivo().resolver(transaccion=x, cliente=cliente)
+            # lista += (RazonRetiroEfectivo().aprobados + RazonRetiroEfectivo().rechazados)
+        elif x['tipo'] == 'COMPRA_DOLAR':
+            RazonCompraDolar().resolver(transaccion=x,cliente=cliente)
+            # lista += (RazonCompraDolar().aprobados + RazonCompraDolar().rechazados)
+        elif x["tipo"] == "TRANSFERENCIA_ENVIADA":
+            RazonTransferenciaEnviada().resolver(transaccion=x, cliente=cliente)
+            # lista += (RazonTransferenciaEnviada().aprobados + RazonTransferenciaEnviada().rechazados)
+        elif x["tipo"] == "TRANSFERENCIA_RECIBIDA":
+            RazonTransferenciaRecibida().resolver(transaccion=x, cliente=cliente)
+            # lista += (RazonTransferenciaRecibida().aprobados + RazonTransferenciaRecibida().rechazados)
+    lista = (RazonAltaChequera().aprobados + RazonAltaChequera().rechazados + RazonAltaTarjetaCredito().aprobados + RazonAltaTarjetaCredito().rechazados + RazonRetiroEfectivo().aprobados + RazonRetiroEfectivo().rechazados + RazonCompraDolar().aprobados + RazonCompraDolar().rechazados + RazonTransferenciaEnviada().aprobados + RazonTransferenciaEnviada().rechazados + RazonTransferenciaRecibida().aprobados + RazonTransferenciaRecibida().rechazados)
+
+    return lista
+    

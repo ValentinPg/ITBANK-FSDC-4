@@ -1,4 +1,4 @@
-from ast import Pass
+from moduloCliente import Cliente_black,Cliente_clasico,Cliente_gold
 from copy import copy
 import json
 
@@ -12,13 +12,20 @@ class Json(object):
     
     def __init__(self, archivo) -> None:
         self.archivo = archivo
+        with open(self.archivo, "r") as file: #abro el archivo una sola vez y guardo todo en atributos
+            datos = json.load(file)
+            self.nombre = datos["nombre"]
+            self.apellido = datos["apellido"]
+            self.tipo = datos["tipo"]
+            self.numero = datos["numero"]
+            self.dni = datos["dni"]
     
         
     def obtenerDatos(self,dato):
         with open(self.archivo,"r") as file:
             datos = json.load(file)
             return datos[dato]
-    aaa = []    
+ 
     def obtenerTransacciones(self):
         with open(self.archivo,"r") as file:
             datos = json.load(file)
@@ -36,7 +43,32 @@ class Json(object):
     def obtenerDireccion(self,dato):
         with open(self.archivo,"r") as file:
             datos = json.load(file)
-            return datos["direccion"][dato]       
+            return datos["direccion"][dato] 
+        
+        
+        
+        
+def iniciarPrograma(archivo):
+    archivo = archivo.upper()
+    
+    if archivo == "CLASSIC":
+        print(archivo)
+        archivo = eventos_classic
+        cargado = Json(archivo)
+        return Cliente_clasico(cargado,nombre=cargado.nombre,apellido=cargado.apellido,numero=cargado.apellido,dni=cargado.dni,tipo=cargado.tipo), cargado
+    elif archivo == "GOLD":
+        print(archivo)
+        archivo = eventos_gold
+        cargado = Json(archivo)
+        return Cliente_gold(cargado,nombre=cargado.nombre,apellido=cargado.apellido,numero=cargado.apellido,dni=cargado.dni,tipo=cargado.tipo), cargado
+    elif archivo == "BLACK":
+        print(archivo)
+        archivo = eventos_black
+        cargado = Json(archivo)
+        return Cliente_black(cargado,nombre=cargado.nombre,apellido=cargado.apellido,numero=cargado.apellido,dni=cargado.dni,tipo=cargado.tipo), cargado
+    else:
+        print("archivo no reconocido")
+ 
             
 
 
