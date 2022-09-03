@@ -140,9 +140,34 @@ def razones(archivo,cliente):
     for x in transacciones:  #itero sobre las transacciones
         #divido entre rechazadas  aceptadas
         if x["estado"] == "RECHAZADA": 
-            pass
+            #separacion por operacion
+            if x['tipo'] == 'ALTA_CHEQUERA':
+                print(x)
+            elif x['tipo'] == 'ALTA_TARJETA_CREDITO':
+                pass
+            elif x['tipo'] == 'RETIRO_EFECTIVO_CAJERO_AUTOMATICO':
+                pass
+            elif x['tipo'] == 'COMPRA_DOLAR':
+                pass
+            elif x["tipo"] == "TRANSFERENCIA_ENVIADA":
+                pass
+            elif x["tipo"] == "TRANSFERENCIA_RECIBIDA":
+                pass
+            
         elif x["estado"] == "ACEPTADA":
-            pass
+            
+            if x['tipo'] == 'ALTA_CHEQUERA':
+                print(x)
+            elif x['tipo'] == 'ALTA_TARJETA_CREDITO':
+                pass
+            elif x['tipo'] == 'RETIRO_EFECTIVO_CAJERO_AUTOMATICO':
+                pass
+            elif x['tipo'] == 'COMPRA_DOLAR':
+                pass
+            elif x["tipo"] == "TRANSFERENCIA_ENVIADA":
+                pass
+            elif x["tipo"] == "TRANSFERENCIA_RECIBIDA":
+                pass
     
 
 razones(x,y)
