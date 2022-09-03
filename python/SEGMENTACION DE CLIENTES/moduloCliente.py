@@ -15,7 +15,6 @@ class Cliente():
         self.dni = dni
         self.tipo = tipo
         self.direccion = Direccion(calle=self.archivo.obtenerDireccion("calle"),numero=self.archivo.obtenerDireccion("numero"),ciudad=self.archivo.obtenerDireccion("ciudad"), estado=self.archivo.obtenerDireccion("provincia"), cp=self.archivo.obtenerDireccion("pais"))
-        self.transacciones = self.archivo.obtenerTransacciones()
         self.maxCredito = 0
         self.maxChequera = 0
         self.caja_ahorro = None
